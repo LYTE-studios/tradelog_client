@@ -10,20 +10,100 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'protocol.dart' as _i3;
+import 'package:tradelog_client/src/protocol/linked_accounts.dart' as _i3;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i4;
+import 'protocol.dart' as _i5;
 
 /// {@category Endpoint}
-class EndpointExample extends _i1.EndpointRef {
-  EndpointExample(_i1.EndpointCaller caller) : super(caller);
+class EndpointAccount extends _i1.EndpointRef {
+  EndpointAccount(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'example';
+  String get name => 'account';
 
-  _i2.Future<String> hello(String name) => caller.callServerEndpoint<String>(
-        'example',
-        'hello',
-        {'name': name},
+  _i2.Future<void> linkAccount(_i3.LinkedAccount account) =>
+      caller.callServerEndpoint<void>(
+        'account',
+        'linkAccount',
+        {'account': account},
       );
+
+  _i2.Future<void> unlinkAccount(_i3.LinkedAccount account) =>
+      caller.callServerEndpoint<void>(
+        'account',
+        'unlinkAccount',
+        {'account': account},
+      );
+}
+
+/// {@category Endpoint}
+class EndpointTradeLocker extends _i1.EndpointRef {
+  EndpointTradeLocker(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'tradeLocker';
+
+  _i2.Future<void> initializeClient({required int accNum}) =>
+      caller.callServerEndpoint<void>(
+        'tradeLocker',
+        'initializeClient',
+        {'accNum': accNum},
+      );
+
+  _i2.Future<String> authenticate(
+    String email,
+    String password,
+    String server,
+  ) =>
+      caller.callServerEndpoint<String>(
+        'tradeLocker',
+        'authenticate',
+        {
+          'email': email,
+          'password': password,
+          'server': server,
+        },
+      );
+
+  _i2.Future<String> refresh() => caller.callServerEndpoint<String>(
+        'tradeLocker',
+        'refresh',
+        {},
+      );
+
+  _i2.Future<String> getAccounts() => caller.callServerEndpoint<String>(
+        'tradeLocker',
+        'getAccounts',
+        {},
+      );
+
+  _i2.Future<String> getPositions(
+    int accountId,
+    int accNum,
+  ) =>
+      caller.callServerEndpoint<String>(
+        'tradeLocker',
+        'getPositions',
+        {
+          'accountId': accountId,
+          'accNum': accNum,
+        },
+      );
+
+  _i2.Future<Map<String, dynamic>> postData(Map<String, dynamic> data) =>
+      caller.callServerEndpoint<Map<String, dynamic>>(
+        'tradeLocker',
+        'postData',
+        {'data': data},
+      );
+}
+
+class _Modules {
+  _Modules(Client client) {
+    auth = _i4.Caller(client);
+  }
+
+  late final _i4.Caller auth;
 }
 
 class Client extends _i1.ServerpodClient {
@@ -41,7 +121,7 @@ class Client extends _i1.ServerpodClient {
     Function(_i1.MethodCallContext)? onSucceededCall,
   }) : super(
           host,
-          _i3.Protocol(),
+          _i5.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -49,14 +129,24 @@ class Client extends _i1.ServerpodClient {
           onFailedCall: onFailedCall,
           onSucceededCall: onSucceededCall,
         ) {
-    example = EndpointExample(this);
+    account = EndpointAccount(this);
+    tradeLocker = EndpointTradeLocker(this);
+    modules = _Modules(this);
   }
 
-  late final EndpointExample example;
+  late final EndpointAccount account;
+
+  late final EndpointTradeLocker tradeLocker;
+
+  late final _Modules modules;
 
   @override
-  Map<String, _i1.EndpointRef> get endpointRefLookup => {'example': example};
+  Map<String, _i1.EndpointRef> get endpointRefLookup => {
+        'account': account,
+        'tradeLocker': tradeLocker,
+      };
 
   @override
-  Map<String, _i1.ModuleEndpointCaller> get moduleLookup => {};
+  Map<String, _i1.ModuleEndpointCaller> get moduleLookup =>
+      {'auth': modules.auth};
 }
