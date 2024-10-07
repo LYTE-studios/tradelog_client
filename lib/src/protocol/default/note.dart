@@ -12,40 +12,33 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i2;
 
-abstract class TradelockerCredentials implements _i1.SerializableModel {
-  TradelockerCredentials._({
+abstract class Note implements _i1.SerializableModel {
+  Note._({
     this.id,
-    required this.email,
-    required this.password,
-    required this.server,
-    this.refreshToken,
+    required this.content,
     required this.userId,
     this.user,
+    required this.date,
   });
 
-  factory TradelockerCredentials({
+  factory Note({
     int? id,
-    required String email,
-    required String password,
-    required String server,
-    String? refreshToken,
+    required String content,
     required int userId,
     _i2.UserInfo? user,
-  }) = _TradelockerCredentialsImpl;
+    required DateTime date,
+  }) = _NoteImpl;
 
-  factory TradelockerCredentials.fromJson(
-      Map<String, dynamic> jsonSerialization) {
-    return TradelockerCredentials(
+  factory Note.fromJson(Map<String, dynamic> jsonSerialization) {
+    return Note(
       id: jsonSerialization['id'] as int?,
-      email: jsonSerialization['email'] as String,
-      password: jsonSerialization['password'] as String,
-      server: jsonSerialization['server'] as String,
-      refreshToken: jsonSerialization['refreshToken'] as String?,
+      content: jsonSerialization['content'] as String,
       userId: jsonSerialization['userId'] as int,
       user: jsonSerialization['user'] == null
           ? null
           : _i2.UserInfo.fromJson(
               (jsonSerialization['user'] as Map<String, dynamic>)),
+      date: _i1.DateTimeJsonExtension.fromJson(jsonSerialization['date']),
     );
   }
 
@@ -54,37 +47,29 @@ abstract class TradelockerCredentials implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  String email;
-
-  String password;
-
-  String server;
-
-  String? refreshToken;
+  String content;
 
   int userId;
 
   _i2.UserInfo? user;
 
-  TradelockerCredentials copyWith({
+  DateTime date;
+
+  Note copyWith({
     int? id,
-    String? email,
-    String? password,
-    String? server,
-    String? refreshToken,
+    String? content,
     int? userId,
     _i2.UserInfo? user,
+    DateTime? date,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
-      'email': email,
-      'password': password,
-      'server': server,
-      if (refreshToken != null) 'refreshToken': refreshToken,
+      'content': content,
       'userId': userId,
       if (user != null) 'user': user?.toJson(),
+      'date': date.toJson(),
     };
   }
 
@@ -96,43 +81,35 @@ abstract class TradelockerCredentials implements _i1.SerializableModel {
 
 class _Undefined {}
 
-class _TradelockerCredentialsImpl extends TradelockerCredentials {
-  _TradelockerCredentialsImpl({
+class _NoteImpl extends Note {
+  _NoteImpl({
     int? id,
-    required String email,
-    required String password,
-    required String server,
-    String? refreshToken,
+    required String content,
     required int userId,
     _i2.UserInfo? user,
+    required DateTime date,
   }) : super._(
           id: id,
-          email: email,
-          password: password,
-          server: server,
-          refreshToken: refreshToken,
+          content: content,
           userId: userId,
           user: user,
+          date: date,
         );
 
   @override
-  TradelockerCredentials copyWith({
+  Note copyWith({
     Object? id = _Undefined,
-    String? email,
-    String? password,
-    String? server,
-    Object? refreshToken = _Undefined,
+    String? content,
     int? userId,
     Object? user = _Undefined,
+    DateTime? date,
   }) {
-    return TradelockerCredentials(
+    return Note(
       id: id is int? ? id : this.id,
-      email: email ?? this.email,
-      password: password ?? this.password,
-      server: server ?? this.server,
-      refreshToken: refreshToken is String? ? refreshToken : this.refreshToken,
+      content: content ?? this.content,
       userId: userId ?? this.userId,
       user: user is _i2.UserInfo? ? user : this.user?.copyWith(),
+      date: date ?? this.date,
     );
   }
 }
