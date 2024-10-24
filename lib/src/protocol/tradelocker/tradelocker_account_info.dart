@@ -14,8 +14,8 @@ import '../protocol.dart' as _i2;
 
 abstract class TradelockerAccountInformation implements _i1.SerializableModel {
   TradelockerAccountInformation._({
-    required this.currency,
     required this.id,
+    required this.currency,
     required this.name,
     required this.riskRules,
     required this.status,
@@ -24,8 +24,8 @@ abstract class TradelockerAccountInformation implements _i1.SerializableModel {
   });
 
   factory TradelockerAccountInformation({
-    required String currency,
     required String id,
+    required String currency,
     required String name,
     required _i2.RiskRules riskRules,
     required String status,
@@ -36,8 +36,8 @@ abstract class TradelockerAccountInformation implements _i1.SerializableModel {
   factory TradelockerAccountInformation.fromJson(
       Map<String, dynamic> jsonSerialization) {
     return TradelockerAccountInformation(
-      currency: jsonSerialization['currency'] as String,
       id: jsonSerialization['id'] as String,
+      currency: jsonSerialization['currency'] as String,
       name: jsonSerialization['name'] as String,
       riskRules: _i2.RiskRules.fromJson(
           (jsonSerialization['riskRules'] as Map<String, dynamic>)),
@@ -63,8 +63,8 @@ abstract class TradelockerAccountInformation implements _i1.SerializableModel {
   String type;
 
   TradelockerAccountInformation copyWith({
-    String? currency,
     String? id,
+    String? currency,
     String? name,
     _i2.RiskRules? riskRules,
     String? status,
@@ -74,8 +74,8 @@ abstract class TradelockerAccountInformation implements _i1.SerializableModel {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'currency': currency,
       'id': id,
+      'currency': currency,
       'name': name,
       'riskRules': riskRules.toJson(),
       'status': status,
@@ -92,16 +92,16 @@ abstract class TradelockerAccountInformation implements _i1.SerializableModel {
 
 class _TradelockerAccountInformationImpl extends TradelockerAccountInformation {
   _TradelockerAccountInformationImpl({
-    required String currency,
     required String id,
+    required String currency,
     required String name,
     required _i2.RiskRules riskRules,
     required String status,
     required _i2.TradingRules tradingRules,
     required String type,
   }) : super._(
-          currency: currency,
           id: id,
+          currency: currency,
           name: name,
           riskRules: riskRules,
           status: status,
@@ -111,8 +111,8 @@ class _TradelockerAccountInformationImpl extends TradelockerAccountInformation {
 
   @override
   TradelockerAccountInformation copyWith({
-    String? currency,
     String? id,
+    String? currency,
     String? name,
     _i2.RiskRules? riskRules,
     String? status,
@@ -120,8 +120,8 @@ class _TradelockerAccountInformationImpl extends TradelockerAccountInformation {
     String? type,
   }) {
     return TradelockerAccountInformation(
-      currency: currency ?? this.currency,
       id: id ?? this.id,
+      currency: currency ?? this.currency,
       name: name ?? this.name,
       riskRules: riskRules ?? this.riskRules.copyWith(),
       status: status ?? this.status,
