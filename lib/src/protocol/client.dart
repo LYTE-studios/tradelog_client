@@ -60,6 +60,27 @@ class EndpointAccount extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointFile extends _i1.EndpointRef {
+  EndpointFile(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'file';
+
+  _i2.Future<String?> getUploadDescription(String path) =>
+      caller.callServerEndpoint<String?>(
+        'file',
+        'getUploadDescription',
+        {'path': path},
+      );
+
+  _i2.Future<bool> verifyUpload(String path) => caller.callServerEndpoint<bool>(
+        'file',
+        'verifyUpload',
+        {'path': path},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointMetaApi extends _i1.EndpointRef {
   EndpointMetaApi(_i1.EndpointCaller caller) : super(caller);
 
@@ -332,6 +353,7 @@ class Client extends _i1.ServerpodClientShared {
               disconnectStreamsOnLostInternetConnection,
         ) {
     account = EndpointAccount(this);
+    file = EndpointFile(this);
     metaApi = EndpointMetaApi(this);
     note = EndpointNote(this);
     profile = EndpointProfile(this);
@@ -341,6 +363,8 @@ class Client extends _i1.ServerpodClientShared {
   }
 
   late final EndpointAccount account;
+
+  late final EndpointFile file;
 
   late final EndpointMetaApi metaApi;
 
@@ -357,6 +381,7 @@ class Client extends _i1.ServerpodClientShared {
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
         'account': account,
+        'file': file,
         'metaApi': metaApi,
         'note': note,
         'profile': profile,
