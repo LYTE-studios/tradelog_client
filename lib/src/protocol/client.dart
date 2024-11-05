@@ -124,14 +124,16 @@ class EndpointMetaApi extends _i1.EndpointRef {
   /// Caches the access token after authentication.
   _i2.Future<void> authenticate(
     String apiKey,
-    String metaId,
-  ) =>
+    String metaId, {
+    String? title,
+  }) =>
       caller.callServerEndpoint<void>(
         'metaApi',
         'authenticate',
         {
           'apiKey': apiKey,
           'metaId': metaId,
+          'title': title,
         },
       );
 
@@ -307,8 +309,9 @@ class EndpointTradeLocker extends _i1.EndpointRef {
   _i2.Future<String> authenticate(
     String email,
     String password,
-    String server,
-  ) =>
+    String server, {
+    String? title,
+  }) =>
       caller.callServerEndpoint<String>(
         'tradeLocker',
         'authenticate',
@@ -316,6 +319,7 @@ class EndpointTradeLocker extends _i1.EndpointRef {
           'email': email,
           'password': password,
           'server': server,
+          'title': title,
         },
       );
 

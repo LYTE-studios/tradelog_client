@@ -22,6 +22,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
     this.tradelockerAccountId,
     this.tradelockerAccounts,
     this.metaID,
+    this.title,
   });
 
   factory LinkedAccount({
@@ -33,6 +34,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
     List<String>? tradelockerAccountId,
     List<String>? tradelockerAccounts,
     String? metaID,
+    String? title,
   }) = _LinkedAccountImpl;
 
   factory LinkedAccount.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -50,6 +52,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
           ?.map((e) => e as String)
           .toList(),
       metaID: jsonSerialization['metaID'] as String?,
+      title: jsonSerialization['title'] as String?,
     );
   }
 
@@ -72,6 +75,8 @@ abstract class LinkedAccount implements _i1.SerializableModel {
 
   String? metaID;
 
+  String? title;
+
   LinkedAccount copyWith({
     int? id,
     int? userInfoId,
@@ -81,6 +86,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
     List<String>? tradelockerAccountId,
     List<String>? tradelockerAccounts,
     String? metaID,
+    String? title,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -96,6 +102,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
       if (tradelockerAccounts != null)
         'tradelockerAccounts': tradelockerAccounts?.toJson(),
       if (metaID != null) 'metaID': metaID,
+      if (title != null) 'title': title,
     };
   }
 
@@ -117,6 +124,7 @@ class _LinkedAccountImpl extends LinkedAccount {
     List<String>? tradelockerAccountId,
     List<String>? tradelockerAccounts,
     String? metaID,
+    String? title,
   }) : super._(
           id: id,
           userInfoId: userInfoId,
@@ -126,6 +134,7 @@ class _LinkedAccountImpl extends LinkedAccount {
           tradelockerAccountId: tradelockerAccountId,
           tradelockerAccounts: tradelockerAccounts,
           metaID: metaID,
+          title: title,
         );
 
   @override
@@ -138,6 +147,7 @@ class _LinkedAccountImpl extends LinkedAccount {
     Object? tradelockerAccountId = _Undefined,
     Object? tradelockerAccounts = _Undefined,
     Object? metaID = _Undefined,
+    Object? title = _Undefined,
   }) {
     return LinkedAccount(
       id: id is int? ? id : this.id,
@@ -154,6 +164,7 @@ class _LinkedAccountImpl extends LinkedAccount {
           ? tradelockerAccounts
           : this.tradelockerAccounts?.map((e0) => e0).toList(),
       metaID: metaID is String? ? metaID : this.metaID,
+      title: title is String? ? title : this.title,
     );
   }
 }
