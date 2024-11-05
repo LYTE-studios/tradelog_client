@@ -18,6 +18,10 @@ abstract class LinkedAccount implements _i1.SerializableModel {
     required this.userInfoId,
     required this.apiKey,
     required this.platform,
+    this.tradelockerCredentialsId,
+    this.tradelockerAccountId,
+    this.tradelockerAccounts,
+    this.metaID,
   });
 
   factory LinkedAccount({
@@ -25,6 +29,10 @@ abstract class LinkedAccount implements _i1.SerializableModel {
     required int userInfoId,
     required String apiKey,
     required _i2.Platform platform,
+    int? tradelockerCredentialsId,
+    List<String>? tradelockerAccountId,
+    List<String>? tradelockerAccounts,
+    String? metaID,
   }) = _LinkedAccountImpl;
 
   factory LinkedAccount.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -33,6 +41,15 @@ abstract class LinkedAccount implements _i1.SerializableModel {
       userInfoId: jsonSerialization['userInfoId'] as int,
       apiKey: jsonSerialization['apiKey'] as String,
       platform: _i2.Platform.fromJson((jsonSerialization['platform'] as int)),
+      tradelockerCredentialsId:
+          jsonSerialization['tradelockerCredentialsId'] as int?,
+      tradelockerAccountId: (jsonSerialization['tradelockerAccountId'] as List?)
+          ?.map((e) => e as String)
+          .toList(),
+      tradelockerAccounts: (jsonSerialization['tradelockerAccounts'] as List?)
+          ?.map((e) => e as String)
+          .toList(),
+      metaID: jsonSerialization['metaID'] as String?,
     );
   }
 
@@ -47,11 +64,23 @@ abstract class LinkedAccount implements _i1.SerializableModel {
 
   _i2.Platform platform;
 
+  int? tradelockerCredentialsId;
+
+  List<String>? tradelockerAccountId;
+
+  List<String>? tradelockerAccounts;
+
+  String? metaID;
+
   LinkedAccount copyWith({
     int? id,
     int? userInfoId,
     String? apiKey,
     _i2.Platform? platform,
+    int? tradelockerCredentialsId,
+    List<String>? tradelockerAccountId,
+    List<String>? tradelockerAccounts,
+    String? metaID,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -60,6 +89,13 @@ abstract class LinkedAccount implements _i1.SerializableModel {
       'userInfoId': userInfoId,
       'apiKey': apiKey,
       'platform': platform.toJson(),
+      if (tradelockerCredentialsId != null)
+        'tradelockerCredentialsId': tradelockerCredentialsId,
+      if (tradelockerAccountId != null)
+        'tradelockerAccountId': tradelockerAccountId?.toJson(),
+      if (tradelockerAccounts != null)
+        'tradelockerAccounts': tradelockerAccounts?.toJson(),
+      if (metaID != null) 'metaID': metaID,
     };
   }
 
@@ -77,11 +113,19 @@ class _LinkedAccountImpl extends LinkedAccount {
     required int userInfoId,
     required String apiKey,
     required _i2.Platform platform,
+    int? tradelockerCredentialsId,
+    List<String>? tradelockerAccountId,
+    List<String>? tradelockerAccounts,
+    String? metaID,
   }) : super._(
           id: id,
           userInfoId: userInfoId,
           apiKey: apiKey,
           platform: platform,
+          tradelockerCredentialsId: tradelockerCredentialsId,
+          tradelockerAccountId: tradelockerAccountId,
+          tradelockerAccounts: tradelockerAccounts,
+          metaID: metaID,
         );
 
   @override
@@ -90,12 +134,26 @@ class _LinkedAccountImpl extends LinkedAccount {
     int? userInfoId,
     String? apiKey,
     _i2.Platform? platform,
+    Object? tradelockerCredentialsId = _Undefined,
+    Object? tradelockerAccountId = _Undefined,
+    Object? tradelockerAccounts = _Undefined,
+    Object? metaID = _Undefined,
   }) {
     return LinkedAccount(
       id: id is int? ? id : this.id,
       userInfoId: userInfoId ?? this.userInfoId,
       apiKey: apiKey ?? this.apiKey,
       platform: platform ?? this.platform,
+      tradelockerCredentialsId: tradelockerCredentialsId is int?
+          ? tradelockerCredentialsId
+          : this.tradelockerCredentialsId,
+      tradelockerAccountId: tradelockerAccountId is List<String>?
+          ? tradelockerAccountId
+          : this.tradelockerAccountId?.map((e0) => e0).toList(),
+      tradelockerAccounts: tradelockerAccounts is List<String>?
+          ? tradelockerAccounts
+          : this.tradelockerAccounts?.map((e0) => e0).toList(),
+      metaID: metaID is String? ? metaID : this.metaID,
     );
   }
 }

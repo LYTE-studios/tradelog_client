@@ -16,6 +16,7 @@ import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i3;
 abstract class Trade implements _i1.SerializableModel {
   Trade._({
     this.id,
+    required this.platform,
     required this.option,
     required this.userId,
     this.user,
@@ -31,6 +32,7 @@ abstract class Trade implements _i1.SerializableModel {
 
   factory Trade({
     int? id,
+    required String platform,
     required _i2.Option option,
     required int userId,
     _i3.UserInfo? user,
@@ -47,6 +49,7 @@ abstract class Trade implements _i1.SerializableModel {
   factory Trade.fromJson(Map<String, dynamic> jsonSerialization) {
     return Trade(
       id: jsonSerialization['id'] as int?,
+      platform: jsonSerialization['platform'] as String,
       option: _i2.Option.fromJson((jsonSerialization['option'] as int)),
       userId: jsonSerialization['userId'] as int,
       user: jsonSerialization['user'] == null
@@ -68,6 +71,8 @@ abstract class Trade implements _i1.SerializableModel {
   /// database or if it has been fetched from the database. Otherwise,
   /// the id will be null.
   int? id;
+
+  String platform;
 
   _i2.Option option;
 
@@ -93,6 +98,7 @@ abstract class Trade implements _i1.SerializableModel {
 
   Trade copyWith({
     int? id,
+    String? platform,
     _i2.Option? option,
     int? userId,
     _i3.UserInfo? user,
@@ -109,6 +115,7 @@ abstract class Trade implements _i1.SerializableModel {
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      'platform': platform,
       'option': option.toJson(),
       'userId': userId,
       if (user != null) 'user': user?.toJson(),
@@ -134,6 +141,7 @@ class _Undefined {}
 class _TradeImpl extends Trade {
   _TradeImpl({
     int? id,
+    required String platform,
     required _i2.Option option,
     required int userId,
     _i3.UserInfo? user,
@@ -147,6 +155,7 @@ class _TradeImpl extends Trade {
     required double amount,
   }) : super._(
           id: id,
+          platform: platform,
           option: option,
           userId: userId,
           user: user,
@@ -163,6 +172,7 @@ class _TradeImpl extends Trade {
   @override
   Trade copyWith({
     Object? id = _Undefined,
+    String? platform,
     _i2.Option? option,
     int? userId,
     Object? user = _Undefined,
@@ -177,6 +187,7 @@ class _TradeImpl extends Trade {
   }) {
     return Trade(
       id: id is int? ? id : this.id,
+      platform: platform ?? this.platform,
       option: option ?? this.option,
       userId: userId ?? this.userId,
       user: user is _i3.UserInfo? ? user : this.user?.copyWith(),

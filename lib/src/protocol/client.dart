@@ -12,20 +12,20 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:tradelog_client/src/protocol/linked_accounts.dart' as _i3;
+import 'package:tradelog_client/src/protocol/default/display_trade.dart' as _i4;
 import 'package:tradelog_client/src/protocol/meta/meta_account_information.dart'
-    as _i4;
-import 'package:tradelog_client/src/protocol/meta/meta_trader_position.dart'
     as _i5;
-import 'package:tradelog_client/src/protocol/default/display_trade.dart' as _i6;
+import 'package:tradelog_client/src/protocol/meta/meta_trader_position.dart'
+    as _i6;
 import 'package:tradelog_client/src/protocol/meta/meta_trader_order.dart'
     as _i7;
 import 'package:tradelog_client/src/protocol/default/note.dart' as _i8;
 import 'package:tradelog_client/src/protocol/profile/tradely_profile.dart'
     as _i9;
 import 'package:tradelog_client/src/protocol/default/trade.dart' as _i10;
-import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_position.dart'
-    as _i11;
 import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_order.dart'
+    as _i11;
+import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_account_info.dart'
     as _i12;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
 import 'protocol.dart' as _i14;
@@ -81,6 +81,28 @@ class EndpointFile extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointGlobal extends _i1.EndpointRef {
+  EndpointGlobal(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'global';
+
+  _i2.Future<List<_i4.DisplayTrade>> fetchFromAPIs() =>
+      caller.callServerEndpoint<List<_i4.DisplayTrade>>(
+        'global',
+        'fetchFromAPIs',
+        {},
+      );
+
+  _i2.Future<List<_i4.DisplayTrade>> getCachedTrades() =>
+      caller.callServerEndpoint<List<_i4.DisplayTrade>>(
+        'global',
+        'getCachedTrades',
+        {},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointMetaApi extends _i1.EndpointRef {
   EndpointMetaApi(_i1.EndpointCaller caller) : super(caller);
 
@@ -100,19 +122,25 @@ class EndpointMetaApi extends _i1.EndpointRef {
   /// Authenticates the user by storing the provided API key and linking it to the user's account.
   /// If a linked account exists, it updates the API key. Otherwise, it inserts a new linked account.
   /// Caches the access token after authentication.
-  _i2.Future<void> authenticate(String apiKey) =>
+  _i2.Future<void> authenticate(
+    String apiKey,
+    String metaId,
+  ) =>
       caller.callServerEndpoint<void>(
         'metaApi',
         'authenticate',
-        {'apiKey': apiKey},
+        {
+          'apiKey': apiKey,
+          'metaId': metaId,
+        },
       );
 
   /// Retrieves the account information for the specified MetaTrader account.
   /// Initializes the MetaApiClient if not already initialized.
   /// Returns a [MetaTradingAccountInformation] object if successful, otherwise throws an exception.
-  _i2.Future<_i4.MetaTradingAccountInformation> getAccountInformation(
+  _i2.Future<_i5.MetaTradingAccountInformation> getAccountInformation(
           String accountId) =>
-      caller.callServerEndpoint<_i4.MetaTradingAccountInformation>(
+      caller.callServerEndpoint<_i5.MetaTradingAccountInformation>(
         'metaApi',
         'getAccountInformation',
         {'accountId': accountId},
@@ -121,15 +149,15 @@ class EndpointMetaApi extends _i1.EndpointRef {
   /// Retrieves the list of open positions for the specified MetaTrader account.
   /// Initializes the MetaApiClient if not already initialized.
   /// Returns a list of [MetatraderPosition] objects if successful, otherwise throws an exception.
-  _i2.Future<List<_i5.MetatraderPosition>> getPositions(String accountId) =>
-      caller.callServerEndpoint<List<_i5.MetatraderPosition>>(
+  _i2.Future<List<_i6.MetatraderPosition>> getPositions(String accountId) =>
+      caller.callServerEndpoint<List<_i6.MetatraderPosition>>(
         'metaApi',
         'getPositions',
         {'accountId': accountId},
       );
 
-  _i2.Future<List<_i6.DisplayTrade>> getTrades(String accountId) =>
-      caller.callServerEndpoint<List<_i6.DisplayTrade>>(
+  _i2.Future<List<_i4.DisplayTrade>> getTrades(String accountId) =>
+      caller.callServerEndpoint<List<_i4.DisplayTrade>>(
         'metaApi',
         'getTrades',
         {'accountId': accountId},
@@ -240,6 +268,20 @@ class EndpointTrade extends _i1.EndpointRef {
         'deleteTrade',
         {'trade': trade},
       );
+
+  _i2.Future<List<_i10.Trade>> fetchTrades() =>
+      caller.callServerEndpoint<List<_i10.Trade>>(
+        'trade',
+        'fetchTrades',
+        {},
+      );
+
+  _i2.Future<String> importTrades(List<int> csvFile) =>
+      caller.callServerEndpoint<String>(
+        'trade',
+        'importTrades',
+        {'csvFile': csvFile},
+      );
 }
 
 /// {@category Endpoint}
@@ -249,11 +291,17 @@ class EndpointTradeLocker extends _i1.EndpointRef {
   @override
   String get name => 'tradeLocker';
 
-  _i2.Future<void> initializeClient({required int accNum}) =>
+  _i2.Future<void> initializeClient(
+    String apiKey, {
+    required int accNum,
+  }) =>
       caller.callServerEndpoint<void>(
         'tradeLocker',
         'initializeClient',
-        {'accNum': accNum},
+        {
+          'apiKey': apiKey,
+          'accNum': accNum,
+        },
       );
 
   _i2.Future<String> authenticate(
@@ -271,50 +319,55 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<String> refresh() => caller.callServerEndpoint<String>(
+  _i2.Future<void> refresh() => caller.callServerEndpoint<void>(
         'tradeLocker',
         'refresh',
         {},
       );
 
-  _i2.Future<List<_i6.DisplayTrade>> getTrades(
+  _i2.Future<List<_i4.DisplayTrade>> getAllTrades() =>
+      caller.callServerEndpoint<List<_i4.DisplayTrade>>(
+        'tradeLocker',
+        'getAllTrades',
+        {},
+      );
+
+  _i2.Future<List<_i4.DisplayTrade>> getTrades(
+    String apiKey,
     int accountId,
     int accNum,
   ) =>
-      caller.callServerEndpoint<List<_i6.DisplayTrade>>(
+      caller.callServerEndpoint<List<_i4.DisplayTrade>>(
         'tradeLocker',
         'getTrades',
         {
+          'apiKey': apiKey,
           'accountId': accountId,
           'accNum': accNum,
         },
       );
 
-  /// Private Helper Functions
-  _i2.Future<List<_i11.TradelockerPosition>> getPositionsWithRateLimit(
+  _i2.Future<List<_i11.TradelockerOrder>> getOrdersHistoryWithRateLimit(
+    String apiKey,
     int accountId,
     int accNum,
   ) =>
-      caller.callServerEndpoint<List<_i11.TradelockerPosition>>(
-        'tradeLocker',
-        'getPositionsWithRateLimit',
-        {
-          'accountId': accountId,
-          'accNum': accNum,
-        },
-      );
-
-  _i2.Future<List<_i12.TradelockerOrder>> getOrdersHistoryWithRateLimit(
-    int accountId,
-    int accNum,
-  ) =>
-      caller.callServerEndpoint<List<_i12.TradelockerOrder>>(
+      caller.callServerEndpoint<List<_i11.TradelockerOrder>>(
         'tradeLocker',
         'getOrdersHistoryWithRateLimit',
         {
+          'apiKey': apiKey,
           'accountId': accountId,
           'accNum': accNum,
         },
+      );
+
+  _i2.Future<List<_i12.TradelockerAccountInformation>> getAccounts(
+          String apiKey) =>
+      caller.callServerEndpoint<List<_i12.TradelockerAccountInformation>>(
+        'tradeLocker',
+        'getAccounts',
+        {'apiKey': apiKey},
       );
 }
 
@@ -354,6 +407,7 @@ class Client extends _i1.ServerpodClientShared {
         ) {
     account = EndpointAccount(this);
     file = EndpointFile(this);
+    global = EndpointGlobal(this);
     metaApi = EndpointMetaApi(this);
     note = EndpointNote(this);
     profile = EndpointProfile(this);
@@ -365,6 +419,8 @@ class Client extends _i1.ServerpodClientShared {
   late final EndpointAccount account;
 
   late final EndpointFile file;
+
+  late final EndpointGlobal global;
 
   late final EndpointMetaApi metaApi;
 
@@ -382,6 +438,7 @@ class Client extends _i1.ServerpodClientShared {
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
         'account': account,
         'file': file,
+        'global': global,
         'metaApi': metaApi,
         'note': note,
         'profile': profile,
