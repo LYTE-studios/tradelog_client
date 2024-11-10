@@ -22,13 +22,15 @@ import 'package:tradelog_client/src/protocol/meta/meta_trader_order.dart'
 import 'package:tradelog_client/src/protocol/default/note.dart' as _i8;
 import 'package:tradelog_client/src/protocol/profile/tradely_profile.dart'
     as _i9;
-import 'package:tradelog_client/src/protocol/default/trade.dart' as _i10;
+import 'package:tradelog_client/src/protocol/statistics/overview_statistics.dart'
+    as _i10;
+import 'package:tradelog_client/src/protocol/default/trade.dart' as _i11;
 import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_order.dart'
-    as _i11;
-import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_account_info.dart'
     as _i12;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
-import 'protocol.dart' as _i14;
+import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_account_info.dart'
+    as _i13;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i14;
+import 'protocol.dart' as _i15;
 
 /// {@category Endpoint}
 class EndpointAccount extends _i1.EndpointRef {
@@ -251,28 +253,43 @@ class EndpointProfile extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointStatistics extends _i1.EndpointRef {
+  EndpointStatistics(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'statistics';
+
+  _i2.Future<_i10.OverviewStatistics> getOverviewStatistics() =>
+      caller.callServerEndpoint<_i10.OverviewStatistics>(
+        'statistics',
+        'getOverviewStatistics',
+        {},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointTrade extends _i1.EndpointRef {
   EndpointTrade(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'trade';
 
-  _i2.Future<void> addTrade(_i10.Trade trade) =>
+  _i2.Future<void> addTrade(_i11.Trade trade) =>
       caller.callServerEndpoint<void>(
         'trade',
         'addTrade',
         {'trade': trade},
       );
 
-  _i2.Future<void> deleteTrade(_i10.Trade trade) =>
+  _i2.Future<void> deleteTrade(_i11.Trade trade) =>
       caller.callServerEndpoint<void>(
         'trade',
         'deleteTrade',
         {'trade': trade},
       );
 
-  _i2.Future<List<_i10.Trade>> fetchTrades() =>
-      caller.callServerEndpoint<List<_i10.Trade>>(
+  _i2.Future<List<_i11.Trade>> fetchTrades() =>
+      caller.callServerEndpoint<List<_i11.Trade>>(
         'trade',
         'fetchTrades',
         {},
@@ -358,12 +375,12 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         {'account': account},
       );
 
-  _i2.Future<List<_i11.TradelockerOrder>> getOrdersHistoryWithRateLimit(
+  _i2.Future<List<_i12.TradelockerOrder>> getOrdersHistoryWithRateLimit(
     String apiKey,
     int accountId,
     int accNum,
   ) =>
-      caller.callServerEndpoint<List<_i11.TradelockerOrder>>(
+      caller.callServerEndpoint<List<_i12.TradelockerOrder>>(
         'tradeLocker',
         'getOrdersHistoryWithRateLimit',
         {
@@ -373,9 +390,9 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<List<_i12.TradelockerAccountInformation>> getAccounts(
+  _i2.Future<List<_i13.TradelockerAccountInformation>> getAccounts(
           String apiKey) =>
-      caller.callServerEndpoint<List<_i12.TradelockerAccountInformation>>(
+      caller.callServerEndpoint<List<_i13.TradelockerAccountInformation>>(
         'tradeLocker',
         'getAccounts',
         {'apiKey': apiKey},
@@ -384,10 +401,10 @@ class EndpointTradeLocker extends _i1.EndpointRef {
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i13.Caller(client);
+    auth = _i14.Caller(client);
   }
 
-  late final _i13.Caller auth;
+  late final _i14.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -406,7 +423,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i14.Protocol(),
+          _i15.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -422,6 +439,7 @@ class Client extends _i1.ServerpodClientShared {
     metaApi = EndpointMetaApi(this);
     note = EndpointNote(this);
     profile = EndpointProfile(this);
+    statistics = EndpointStatistics(this);
     trade = EndpointTrade(this);
     tradeLocker = EndpointTradeLocker(this);
     modules = _Modules(this);
@@ -439,6 +457,8 @@ class Client extends _i1.ServerpodClientShared {
 
   late final EndpointProfile profile;
 
+  late final EndpointStatistics statistics;
+
   late final EndpointTrade trade;
 
   late final EndpointTradeLocker tradeLocker;
@@ -453,6 +473,7 @@ class Client extends _i1.ServerpodClientShared {
         'metaApi': metaApi,
         'note': note,
         'profile': profile,
+        'statistics': statistics,
         'trade': trade,
         'tradeLocker': tradeLocker,
       };
