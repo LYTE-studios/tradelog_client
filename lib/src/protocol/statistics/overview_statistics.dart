@@ -30,8 +30,8 @@ abstract class OverviewStatistics implements _i1.SerializableModel {
     double? tradeWinRateTrend,
     double? realizedReturnThisMonth,
     double? realizedReturnTrend,
-    double? shortTradesAmount,
-    double? longTradesAmount,
+    int? shortTradesAmount,
+    int? longTradesAmount,
   }) = _OverviewStatisticsImpl;
 
   factory OverviewStatistics.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -48,10 +48,8 @@ abstract class OverviewStatistics implements _i1.SerializableModel {
           (jsonSerialization['realizedReturnThisMonth'] as num?)?.toDouble(),
       realizedReturnTrend:
           (jsonSerialization['realizedReturnTrend'] as num?)?.toDouble(),
-      shortTradesAmount:
-          (jsonSerialization['shortTradesAmount'] as num?)?.toDouble(),
-      longTradesAmount:
-          (jsonSerialization['longTradesAmount'] as num?)?.toDouble(),
+      shortTradesAmount: jsonSerialization['shortTradesAmount'] as int?,
+      longTradesAmount: jsonSerialization['longTradesAmount'] as int?,
     );
   }
 
@@ -67,9 +65,9 @@ abstract class OverviewStatistics implements _i1.SerializableModel {
 
   double? realizedReturnTrend;
 
-  double? shortTradesAmount;
+  int? shortTradesAmount;
 
-  double? longTradesAmount;
+  int? longTradesAmount;
 
   OverviewStatistics copyWith({
     double? netProfitLossThisMonth,
@@ -78,8 +76,8 @@ abstract class OverviewStatistics implements _i1.SerializableModel {
     double? tradeWinRateTrend,
     double? realizedReturnThisMonth,
     double? realizedReturnTrend,
-    double? shortTradesAmount,
-    double? longTradesAmount,
+    int? shortTradesAmount,
+    int? longTradesAmount,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -115,8 +113,8 @@ class _OverviewStatisticsImpl extends OverviewStatistics {
     double? tradeWinRateTrend,
     double? realizedReturnThisMonth,
     double? realizedReturnTrend,
-    double? shortTradesAmount,
-    double? longTradesAmount,
+    int? shortTradesAmount,
+    int? longTradesAmount,
   }) : super._(
           netProfitLossThisMonth: netProfitLossThisMonth,
           netProfitLossTrend: netProfitLossTrend,
@@ -158,12 +156,11 @@ class _OverviewStatisticsImpl extends OverviewStatistics {
       realizedReturnTrend: realizedReturnTrend is double?
           ? realizedReturnTrend
           : this.realizedReturnTrend,
-      shortTradesAmount: shortTradesAmount is double?
+      shortTradesAmount: shortTradesAmount is int?
           ? shortTradesAmount
           : this.shortTradesAmount,
-      longTradesAmount: longTradesAmount is double?
-          ? longTradesAmount
-          : this.longTradesAmount,
+      longTradesAmount:
+          longTradesAmount is int? ? longTradesAmount : this.longTradesAmount,
     );
   }
 }
