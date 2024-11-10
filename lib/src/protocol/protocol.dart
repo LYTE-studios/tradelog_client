@@ -27,31 +27,32 @@ import 'meta/threshold_trailing_stop_loss.dart' as _i14;
 import 'meta/trailing_stop_loss.dart' as _i15;
 import 'platform.dart' as _i16;
 import 'profile/tradely_profile.dart' as _i17;
-import 'tradelocker/loss_limit_rule.dart' as _i18;
-import 'tradelocker/risk_rules.dart' as _i19;
-import 'tradelocker/tickcost.dart' as _i20;
-import 'tradelocker/ticksize.dart' as _i21;
-import 'tradelocker/tradelocker_account.dart' as _i22;
-import 'tradelocker/tradelocker_account_info.dart' as _i23;
-import 'tradelocker/tradelocker_instrument.dart' as _i24;
-import 'tradelocker/tradelocker_order.dart' as _i25;
-import 'tradelocker/tradelocker_position.dart' as _i26;
-import 'tradelocker/trading_rules.dart' as _i27;
-import 'protocol.dart' as _i28;
-import 'package:tradelog_client/src/protocol/linked_accounts.dart' as _i29;
+import 'statistics/overview_statistics.dart' as _i18;
+import 'tradelocker/loss_limit_rule.dart' as _i19;
+import 'tradelocker/risk_rules.dart' as _i20;
+import 'tradelocker/tickcost.dart' as _i21;
+import 'tradelocker/ticksize.dart' as _i22;
+import 'tradelocker/tradelocker_account.dart' as _i23;
+import 'tradelocker/tradelocker_account_info.dart' as _i24;
+import 'tradelocker/tradelocker_instrument.dart' as _i25;
+import 'tradelocker/tradelocker_order.dart' as _i26;
+import 'tradelocker/tradelocker_position.dart' as _i27;
+import 'tradelocker/trading_rules.dart' as _i28;
+import 'protocol.dart' as _i29;
+import 'package:tradelog_client/src/protocol/linked_accounts.dart' as _i30;
 import 'package:tradelog_client/src/protocol/default/display_trade.dart'
-    as _i30;
-import 'package:tradelog_client/src/protocol/meta/meta_trader_position.dart'
     as _i31;
-import 'package:tradelog_client/src/protocol/meta/meta_trader_order.dart'
+import 'package:tradelog_client/src/protocol/meta/meta_trader_position.dart'
     as _i32;
-import 'package:tradelog_client/src/protocol/default/note.dart' as _i33;
-import 'package:tradelog_client/src/protocol/default/trade.dart' as _i34;
+import 'package:tradelog_client/src/protocol/meta/meta_trader_order.dart'
+    as _i33;
+import 'package:tradelog_client/src/protocol/default/note.dart' as _i34;
+import 'package:tradelog_client/src/protocol/default/trade.dart' as _i35;
 import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_order.dart'
-    as _i35;
-import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_account_info.dart'
     as _i36;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i37;
+import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_account_info.dart'
+    as _i37;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i38;
 export 'access_token.dart';
 export 'default/display_trade.dart';
 export 'default/display_trade_list.dart';
@@ -68,6 +69,7 @@ export 'meta/threshold_trailing_stop_loss.dart';
 export 'meta/trailing_stop_loss.dart';
 export 'platform.dart';
 export 'profile/tradely_profile.dart';
+export 'statistics/overview_statistics.dart';
 export 'tradelocker/loss_limit_rule.dart';
 export 'tradelocker/risk_rules.dart';
 export 'tradelocker/tickcost.dart';
@@ -141,35 +143,38 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i17.TradelyProfile) {
       return _i17.TradelyProfile.fromJson(data) as T;
     }
-    if (t == _i18.LossLimitRule) {
-      return _i18.LossLimitRule.fromJson(data) as T;
+    if (t == _i18.OverviewStatistics) {
+      return _i18.OverviewStatistics.fromJson(data) as T;
     }
-    if (t == _i19.RiskRules) {
-      return _i19.RiskRules.fromJson(data) as T;
+    if (t == _i19.LossLimitRule) {
+      return _i19.LossLimitRule.fromJson(data) as T;
     }
-    if (t == _i20.TickCost) {
-      return _i20.TickCost.fromJson(data) as T;
+    if (t == _i20.RiskRules) {
+      return _i20.RiskRules.fromJson(data) as T;
     }
-    if (t == _i21.TickSize) {
-      return _i21.TickSize.fromJson(data) as T;
+    if (t == _i21.TickCost) {
+      return _i21.TickCost.fromJson(data) as T;
     }
-    if (t == _i22.TradelockerCredentials) {
-      return _i22.TradelockerCredentials.fromJson(data) as T;
+    if (t == _i22.TickSize) {
+      return _i22.TickSize.fromJson(data) as T;
     }
-    if (t == _i23.TradelockerAccountInformation) {
-      return _i23.TradelockerAccountInformation.fromJson(data) as T;
+    if (t == _i23.TradelockerCredentials) {
+      return _i23.TradelockerCredentials.fromJson(data) as T;
     }
-    if (t == _i24.TradelockerInstrument) {
-      return _i24.TradelockerInstrument.fromJson(data) as T;
+    if (t == _i24.TradelockerAccountInformation) {
+      return _i24.TradelockerAccountInformation.fromJson(data) as T;
     }
-    if (t == _i25.TradelockerOrder) {
-      return _i25.TradelockerOrder.fromJson(data) as T;
+    if (t == _i25.TradelockerInstrument) {
+      return _i25.TradelockerInstrument.fromJson(data) as T;
     }
-    if (t == _i26.TradelockerPosition) {
-      return _i26.TradelockerPosition.fromJson(data) as T;
+    if (t == _i26.TradelockerOrder) {
+      return _i26.TradelockerOrder.fromJson(data) as T;
     }
-    if (t == _i27.TradingRules) {
-      return _i27.TradingRules.fromJson(data) as T;
+    if (t == _i27.TradelockerPosition) {
+      return _i27.TradelockerPosition.fromJson(data) as T;
+    }
+    if (t == _i28.TradingRules) {
+      return _i28.TradingRules.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.AccessToken?>()) {
       return (data != null ? _i2.AccessToken.fromJson(data) : null) as T;
@@ -225,44 +230,48 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i17.TradelyProfile?>()) {
       return (data != null ? _i17.TradelyProfile.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i18.LossLimitRule?>()) {
-      return (data != null ? _i18.LossLimitRule.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i19.RiskRules?>()) {
-      return (data != null ? _i19.RiskRules.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i20.TickCost?>()) {
-      return (data != null ? _i20.TickCost.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i21.TickSize?>()) {
-      return (data != null ? _i21.TickSize.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i22.TradelockerCredentials?>()) {
-      return (data != null ? _i22.TradelockerCredentials.fromJson(data) : null)
+    if (t == _i1.getType<_i18.OverviewStatistics?>()) {
+      return (data != null ? _i18.OverviewStatistics.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i23.TradelockerAccountInformation?>()) {
+    if (t == _i1.getType<_i19.LossLimitRule?>()) {
+      return (data != null ? _i19.LossLimitRule.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i20.RiskRules?>()) {
+      return (data != null ? _i20.RiskRules.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i21.TickCost?>()) {
+      return (data != null ? _i21.TickCost.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i22.TickSize?>()) {
+      return (data != null ? _i22.TickSize.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i23.TradelockerCredentials?>()) {
+      return (data != null ? _i23.TradelockerCredentials.fromJson(data) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i24.TradelockerAccountInformation?>()) {
       return (data != null
-          ? _i23.TradelockerAccountInformation.fromJson(data)
+          ? _i24.TradelockerAccountInformation.fromJson(data)
           : null) as T;
     }
-    if (t == _i1.getType<_i24.TradelockerInstrument?>()) {
-      return (data != null ? _i24.TradelockerInstrument.fromJson(data) : null)
+    if (t == _i1.getType<_i25.TradelockerInstrument?>()) {
+      return (data != null ? _i25.TradelockerInstrument.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i25.TradelockerOrder?>()) {
-      return (data != null ? _i25.TradelockerOrder.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i26.TradelockerOrder?>()) {
+      return (data != null ? _i26.TradelockerOrder.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i26.TradelockerPosition?>()) {
-      return (data != null ? _i26.TradelockerPosition.fromJson(data) : null)
+    if (t == _i1.getType<_i27.TradelockerPosition?>()) {
+      return (data != null ? _i27.TradelockerPosition.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i27.TradingRules?>()) {
-      return (data != null ? _i27.TradingRules.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i28.TradingRules?>()) {
+      return (data != null ? _i28.TradingRules.fromJson(data) : null) as T;
     }
-    if (t == List<_i28.DisplayTrade>) {
+    if (t == List<_i29.DisplayTrade>) {
       return (data as List)
-          .map((e) => deserialize<_i28.DisplayTrade>(e))
+          .map((e) => deserialize<_i29.DisplayTrade>(e))
           .toList() as dynamic;
     }
     if (t == _i1.getType<List<String>?>()) {
@@ -275,62 +284,66 @@ class Protocol extends _i1.SerializationManager {
           ? (data as List).map((e) => deserialize<String>(e)).toList()
           : null) as dynamic;
     }
-    if (t == List<_i28.StopLossThreshold>) {
+    if (t == List<_i29.StopLossThreshold>) {
       return (data as List)
-          .map((e) => deserialize<_i28.StopLossThreshold>(e))
+          .map((e) => deserialize<_i29.StopLossThreshold>(e))
           .toList() as dynamic;
     }
-    if (t == List<_i28.TickCost>) {
-      return (data as List).map((e) => deserialize<_i28.TickCost>(e)).toList()
+    if (t == List<_i29.TickCost>) {
+      return (data as List).map((e) => deserialize<_i29.TickCost>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i28.TickSize>) {
-      return (data as List).map((e) => deserialize<_i28.TickSize>(e)).toList()
+    if (t == List<_i29.TickSize>) {
+      return (data as List).map((e) => deserialize<_i29.TickSize>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i29.LinkedAccount>) {
+    if (t == List<_i30.LinkedAccount>) {
       return (data as List)
-          .map((e) => deserialize<_i29.LinkedAccount>(e))
+          .map((e) => deserialize<_i30.LinkedAccount>(e))
           .toList() as dynamic;
     }
-    if (t == List<_i30.DisplayTrade>) {
+    if (t == List<_i31.DisplayTrade>) {
       return (data as List)
-          .map((e) => deserialize<_i30.DisplayTrade>(e))
+          .map((e) => deserialize<_i31.DisplayTrade>(e))
           .toList() as dynamic;
     }
-    if (t == List<_i31.MetatraderPosition>) {
+    if (t == List<_i32.MetatraderPosition>) {
       return (data as List)
-          .map((e) => deserialize<_i31.MetatraderPosition>(e))
+          .map((e) => deserialize<_i32.MetatraderPosition>(e))
           .toList() as dynamic;
     }
-    if (t == List<_i32.MetatraderOrder>) {
+    if (t == List<_i33.MetatraderOrder>) {
       return (data as List)
-          .map((e) => deserialize<_i32.MetatraderOrder>(e))
+          .map((e) => deserialize<_i33.MetatraderOrder>(e))
           .toList() as dynamic;
     }
-    if (t == List<_i33.Note>) {
-      return (data as List).map((e) => deserialize<_i33.Note>(e)).toList()
+    if (t == List<_i34.Note>) {
+      return (data as List).map((e) => deserialize<_i34.Note>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i34.Trade>) {
-      return (data as List).map((e) => deserialize<_i34.Trade>(e)).toList()
+    if (t == List<_i35.Trade>) {
+      return (data as List).map((e) => deserialize<_i35.Trade>(e)).toList()
           as dynamic;
     }
     if (t == List<int>) {
       return (data as List).map((e) => deserialize<int>(e)).toList() as dynamic;
     }
-    if (t == List<_i35.TradelockerOrder>) {
+    if (t == Map<String, dynamic>) {
+      return (data as Map).map((k, v) =>
+          MapEntry(deserialize<String>(k), deserialize<dynamic>(v))) as dynamic;
+    }
+    if (t == List<_i36.TradelockerOrder>) {
       return (data as List)
-          .map((e) => deserialize<_i35.TradelockerOrder>(e))
+          .map((e) => deserialize<_i36.TradelockerOrder>(e))
           .toList() as dynamic;
     }
-    if (t == List<_i36.TradelockerAccountInformation>) {
+    if (t == List<_i37.TradelockerAccountInformation>) {
       return (data as List)
-          .map((e) => deserialize<_i36.TradelockerAccountInformation>(e))
+          .map((e) => deserialize<_i37.TradelockerAccountInformation>(e))
           .toList() as dynamic;
     }
     try {
-      return _i37.Protocol().deserialize<T>(data, t);
+      return _i38.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -387,37 +400,40 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i17.TradelyProfile) {
       return 'TradelyProfile';
     }
-    if (data is _i18.LossLimitRule) {
+    if (data is _i18.OverviewStatistics) {
+      return 'OverviewStatistics';
+    }
+    if (data is _i19.LossLimitRule) {
       return 'LossLimitRule';
     }
-    if (data is _i19.RiskRules) {
+    if (data is _i20.RiskRules) {
       return 'RiskRules';
     }
-    if (data is _i20.TickCost) {
+    if (data is _i21.TickCost) {
       return 'TickCost';
     }
-    if (data is _i21.TickSize) {
+    if (data is _i22.TickSize) {
       return 'TickSize';
     }
-    if (data is _i22.TradelockerCredentials) {
+    if (data is _i23.TradelockerCredentials) {
       return 'TradelockerCredentials';
     }
-    if (data is _i23.TradelockerAccountInformation) {
+    if (data is _i24.TradelockerAccountInformation) {
       return 'TradelockerAccountInformation';
     }
-    if (data is _i24.TradelockerInstrument) {
+    if (data is _i25.TradelockerInstrument) {
       return 'TradelockerInstrument';
     }
-    if (data is _i25.TradelockerOrder) {
+    if (data is _i26.TradelockerOrder) {
       return 'TradelockerOrder';
     }
-    if (data is _i26.TradelockerPosition) {
+    if (data is _i27.TradelockerPosition) {
       return 'TradelockerPosition';
     }
-    if (data is _i27.TradingRules) {
+    if (data is _i28.TradingRules) {
       return 'TradingRules';
     }
-    className = _i37.Protocol().getClassNameForObject(data);
+    className = _i38.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -474,39 +490,42 @@ class Protocol extends _i1.SerializationManager {
     if (data['className'] == 'TradelyProfile') {
       return deserialize<_i17.TradelyProfile>(data['data']);
     }
+    if (data['className'] == 'OverviewStatistics') {
+      return deserialize<_i18.OverviewStatistics>(data['data']);
+    }
     if (data['className'] == 'LossLimitRule') {
-      return deserialize<_i18.LossLimitRule>(data['data']);
+      return deserialize<_i19.LossLimitRule>(data['data']);
     }
     if (data['className'] == 'RiskRules') {
-      return deserialize<_i19.RiskRules>(data['data']);
+      return deserialize<_i20.RiskRules>(data['data']);
     }
     if (data['className'] == 'TickCost') {
-      return deserialize<_i20.TickCost>(data['data']);
+      return deserialize<_i21.TickCost>(data['data']);
     }
     if (data['className'] == 'TickSize') {
-      return deserialize<_i21.TickSize>(data['data']);
+      return deserialize<_i22.TickSize>(data['data']);
     }
     if (data['className'] == 'TradelockerCredentials') {
-      return deserialize<_i22.TradelockerCredentials>(data['data']);
+      return deserialize<_i23.TradelockerCredentials>(data['data']);
     }
     if (data['className'] == 'TradelockerAccountInformation') {
-      return deserialize<_i23.TradelockerAccountInformation>(data['data']);
+      return deserialize<_i24.TradelockerAccountInformation>(data['data']);
     }
     if (data['className'] == 'TradelockerInstrument') {
-      return deserialize<_i24.TradelockerInstrument>(data['data']);
+      return deserialize<_i25.TradelockerInstrument>(data['data']);
     }
     if (data['className'] == 'TradelockerOrder') {
-      return deserialize<_i25.TradelockerOrder>(data['data']);
+      return deserialize<_i26.TradelockerOrder>(data['data']);
     }
     if (data['className'] == 'TradelockerPosition') {
-      return deserialize<_i26.TradelockerPosition>(data['data']);
+      return deserialize<_i27.TradelockerPosition>(data['data']);
     }
     if (data['className'] == 'TradingRules') {
-      return deserialize<_i27.TradingRules>(data['data']);
+      return deserialize<_i28.TradingRules>(data['data']);
     }
     if (data['className'].startsWith('serverpod_auth.')) {
       data['className'] = data['className'].substring(15);
-      return _i37.Protocol().deserializeByClassName(data);
+      return _i38.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }

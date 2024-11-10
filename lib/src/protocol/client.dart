@@ -351,6 +351,13 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         },
       );
 
+  _i2.Future<Map<String, dynamic>> getRawOrders(_i3.LinkedAccount account) =>
+      caller.callServerEndpoint<Map<String, dynamic>>(
+        'tradeLocker',
+        'getRawOrders',
+        {'account': account},
+      );
+
   _i2.Future<List<_i11.TradelockerOrder>> getOrdersHistoryWithRateLimit(
     String apiKey,
     int accountId,
