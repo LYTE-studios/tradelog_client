@@ -11,8 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'package:tradelog_client/src/protocol/linked_accounts.dart' as _i3;
-import 'package:tradelog_client/src/protocol/default/display_trade.dart' as _i4;
+import 'package:tradelog_client/src/protocol/linked_account.dart' as _i3;
+import 'package:tradelog_client/src/protocol/dto/trade_dto.dart' as _i4;
 import 'package:tradelog_client/src/protocol/meta/meta_account_information.dart'
     as _i5;
 import 'package:tradelog_client/src/protocol/meta/meta_trader_position.dart'
@@ -45,20 +45,6 @@ class EndpointAccount extends _i1.EndpointRef {
         'fetchAccounts',
         {},
       );
-
-  _i2.Future<void> linkAccount(_i3.LinkedAccount account) =>
-      caller.callServerEndpoint<void>(
-        'account',
-        'linkAccount',
-        {'account': account},
-      );
-
-  _i2.Future<void> unlinkAccount(_i3.LinkedAccount account) =>
-      caller.callServerEndpoint<void>(
-        'account',
-        'unlinkAccount',
-        {'account': account},
-      );
 }
 
 /// {@category Endpoint}
@@ -89,17 +75,13 @@ class EndpointGlobal extends _i1.EndpointRef {
   @override
   String get name => 'global';
 
-  _i2.Future<List<_i4.DisplayTrade>> fetchFromAPIs() =>
-      caller.callServerEndpoint<List<_i4.DisplayTrade>>(
+  /// Gets the trades from a session
+  /// If the trades are already stored in cache, they get pulled from the session cache
+  /// If they are not, they get fetched from their respective API's
+  _i2.Future<List<_i4.TradeDto>> getTrades() =>
+      caller.callServerEndpoint<List<_i4.TradeDto>>(
         'global',
-        'fetchFromAPIs',
-        {},
-      );
-
-  _i2.Future<List<_i4.DisplayTrade>> getCachedTrades() =>
-      caller.callServerEndpoint<List<_i4.DisplayTrade>>(
-        'global',
-        'getCachedTrades',
+        'getTrades',
         {},
       );
 }
@@ -160,8 +142,8 @@ class EndpointMetaApi extends _i1.EndpointRef {
         {'accountId': accountId},
       );
 
-  _i2.Future<List<_i4.DisplayTrade>> getTrades(String accountId) =>
-      caller.callServerEndpoint<List<_i4.DisplayTrade>>(
+  _i2.Future<List<_i4.TradeDto>> getTrades(String accountId) =>
+      caller.callServerEndpoint<List<_i4.TradeDto>>(
         'metaApi',
         'getTrades',
         {'accountId': accountId},
@@ -274,11 +256,11 @@ class EndpointTrade extends _i1.EndpointRef {
   @override
   String get name => 'trade';
 
-  _i2.Future<void> addTrade(_i11.Trade trade) =>
+  _i2.Future<void> addTrade(_i4.TradeDto dto) =>
       caller.callServerEndpoint<void>(
         'trade',
         'addTrade',
-        {'trade': trade},
+        {'dto': dto},
       );
 
   _i2.Future<void> deleteTrade(_i11.Trade trade) =>
@@ -310,16 +292,16 @@ class EndpointTradeLocker extends _i1.EndpointRef {
   @override
   String get name => 'tradeLocker';
 
-  _i2.Future<void> initializeClient(
-    String apiKey, {
-    required int accNum,
+  _i2.Future<void> initializeClient({
+    required String apiKey,
+    required String refreshToken,
   }) =>
       caller.callServerEndpoint<void>(
         'tradeLocker',
         'initializeClient',
         {
           'apiKey': apiKey,
-          'accNum': accNum,
+          'refreshToken': refreshToken,
         },
       );
 
@@ -346,26 +328,11 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         {},
       );
 
-  _i2.Future<List<_i4.DisplayTrade>> getAllTrades() =>
-      caller.callServerEndpoint<List<_i4.DisplayTrade>>(
+  _i2.Future<List<_i4.TradeDto>> getAllTrades() =>
+      caller.callServerEndpoint<List<_i4.TradeDto>>(
         'tradeLocker',
         'getAllTrades',
         {},
-      );
-
-  _i2.Future<List<_i4.DisplayTrade>> getTrades(
-    String apiKey,
-    int accountId,
-    int accNum,
-  ) =>
-      caller.callServerEndpoint<List<_i4.DisplayTrade>>(
-        'tradeLocker',
-        'getTrades',
-        {
-          'apiKey': apiKey,
-          'accountId': accountId,
-          'accNum': accNum,
-        },
       );
 
   _i2.Future<Map<String, dynamic>> getRawOrders(_i3.LinkedAccount account) =>
@@ -375,27 +342,40 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         {'account': account},
       );
 
-  _i2.Future<List<_i12.TradelockerOrder>> getOrdersHistoryWithRateLimit(
-    String apiKey,
-    int accountId,
-    int accNum,
-  ) =>
+  _i2.Future<List<_i12.TradelockerOrder>> getOrdersHistoryWithRateLimit({
+    required String apiKey,
+    required String refreshToken,
+    required int accountId,
+    required int accNum,
+  }) =>
       caller.callServerEndpoint<List<_i12.TradelockerOrder>>(
         'tradeLocker',
         'getOrdersHistoryWithRateLimit',
         {
           'apiKey': apiKey,
+          'refreshToken': refreshToken,
           'accountId': accountId,
           'accNum': accNum,
         },
       );
 
-  _i2.Future<List<_i13.TradelockerAccountInformation>> getAccounts(
-          String apiKey) =>
+  _i2.Future<List<_i13.TradelockerAccountInformation>> getAccounts({
+    required String apiKey,
+    required String refreshToken,
+  }) =>
       caller.callServerEndpoint<List<_i13.TradelockerAccountInformation>>(
         'tradeLocker',
         'getAccounts',
-        {'apiKey': apiKey},
+        {
+          'apiKey': apiKey,
+          'refreshToken': refreshToken,
+        },
+      );
+
+  _i2.Future<void> reauthenticate() => caller.callServerEndpoint<void>(
+        'tradeLocker',
+        'reauthenticate',
+        {},
       );
 }
 

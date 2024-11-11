@@ -11,17 +11,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../protocol.dart' as _i2;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i3;
 
-abstract class Trade implements _i1.SerializableModel {
-  Trade._({
-    this.id,
-    required this.linkedAccountId,
-    this.linkedAccount,
-    required this.userId,
-    this.user,
-    this.realizedPl,
+abstract class TradeDto implements _i1.SerializableModel {
+  TradeDto._({
+    this.linkedAccountId,
     required this.status,
+    this.realizedPl,
     required this.symbol,
     required this.option,
     this.feeCurrency,
@@ -33,14 +28,10 @@ abstract class Trade implements _i1.SerializableModel {
     this.stopLoss,
   });
 
-  factory Trade({
-    int? id,
-    required int linkedAccountId,
-    _i2.LinkedAccount? linkedAccount,
-    required int userId,
-    _i3.UserInfo? user,
-    double? realizedPl,
+  factory TradeDto({
+    int? linkedAccountId,
     required _i2.TradeStatus status,
+    double? realizedPl,
     required String symbol,
     required _i2.Option option,
     String? feeCurrency,
@@ -50,23 +41,13 @@ abstract class Trade implements _i1.SerializableModel {
     required double lotSize,
     double? takeProfit,
     double? stopLoss,
-  }) = _TradeImpl;
+  }) = _TradeDtoImpl;
 
-  factory Trade.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Trade(
-      id: jsonSerialization['id'] as int?,
-      linkedAccountId: jsonSerialization['linkedAccountId'] as int,
-      linkedAccount: jsonSerialization['linkedAccount'] == null
-          ? null
-          : _i2.LinkedAccount.fromJson(
-              (jsonSerialization['linkedAccount'] as Map<String, dynamic>)),
-      userId: jsonSerialization['userId'] as int,
-      user: jsonSerialization['user'] == null
-          ? null
-          : _i3.UserInfo.fromJson(
-              (jsonSerialization['user'] as Map<String, dynamic>)),
-      realizedPl: (jsonSerialization['realizedPl'] as num?)?.toDouble(),
+  factory TradeDto.fromJson(Map<String, dynamic> jsonSerialization) {
+    return TradeDto(
+      linkedAccountId: jsonSerialization['linkedAccountId'] as int?,
       status: _i2.TradeStatus.fromJson((jsonSerialization['status'] as int)),
+      realizedPl: (jsonSerialization['realizedPl'] as num?)?.toDouble(),
       symbol: jsonSerialization['symbol'] as String,
       option: _i2.Option.fromJson((jsonSerialization['option'] as int)),
       feeCurrency: jsonSerialization['feeCurrency'] as String?,
@@ -82,22 +63,11 @@ abstract class Trade implements _i1.SerializableModel {
     );
   }
 
-  /// The database id, set if the object has been inserted into the
-  /// database or if it has been fetched from the database. Otherwise,
-  /// the id will be null.
-  int? id;
-
-  int linkedAccountId;
-
-  _i2.LinkedAccount? linkedAccount;
-
-  int userId;
-
-  _i3.UserInfo? user;
-
-  double? realizedPl;
+  int? linkedAccountId;
 
   _i2.TradeStatus status;
+
+  double? realizedPl;
 
   String symbol;
 
@@ -117,14 +87,10 @@ abstract class Trade implements _i1.SerializableModel {
 
   double? stopLoss;
 
-  Trade copyWith({
-    int? id,
+  TradeDto copyWith({
     int? linkedAccountId,
-    _i2.LinkedAccount? linkedAccount,
-    int? userId,
-    _i3.UserInfo? user,
-    double? realizedPl,
     _i2.TradeStatus? status,
+    double? realizedPl,
     String? symbol,
     _i2.Option? option,
     String? feeCurrency,
@@ -138,13 +104,9 @@ abstract class Trade implements _i1.SerializableModel {
   @override
   Map<String, dynamic> toJson() {
     return {
-      if (id != null) 'id': id,
-      'linkedAccountId': linkedAccountId,
-      if (linkedAccount != null) 'linkedAccount': linkedAccount?.toJson(),
-      'userId': userId,
-      if (user != null) 'user': user?.toJson(),
-      if (realizedPl != null) 'realizedPl': realizedPl,
+      if (linkedAccountId != null) 'linkedAccountId': linkedAccountId,
       'status': status.toJson(),
+      if (realizedPl != null) 'realizedPl': realizedPl,
       'symbol': symbol,
       'option': option.toJson(),
       if (feeCurrency != null) 'feeCurrency': feeCurrency,
@@ -165,15 +127,11 @@ abstract class Trade implements _i1.SerializableModel {
 
 class _Undefined {}
 
-class _TradeImpl extends Trade {
-  _TradeImpl({
-    int? id,
-    required int linkedAccountId,
-    _i2.LinkedAccount? linkedAccount,
-    required int userId,
-    _i3.UserInfo? user,
-    double? realizedPl,
+class _TradeDtoImpl extends TradeDto {
+  _TradeDtoImpl({
+    int? linkedAccountId,
     required _i2.TradeStatus status,
+    double? realizedPl,
     required String symbol,
     required _i2.Option option,
     String? feeCurrency,
@@ -184,13 +142,9 @@ class _TradeImpl extends Trade {
     double? takeProfit,
     double? stopLoss,
   }) : super._(
-          id: id,
           linkedAccountId: linkedAccountId,
-          linkedAccount: linkedAccount,
-          userId: userId,
-          user: user,
-          realizedPl: realizedPl,
           status: status,
+          realizedPl: realizedPl,
           symbol: symbol,
           option: option,
           feeCurrency: feeCurrency,
@@ -203,14 +157,10 @@ class _TradeImpl extends Trade {
         );
 
   @override
-  Trade copyWith({
-    Object? id = _Undefined,
-    int? linkedAccountId,
-    Object? linkedAccount = _Undefined,
-    int? userId,
-    Object? user = _Undefined,
-    Object? realizedPl = _Undefined,
+  TradeDto copyWith({
+    Object? linkedAccountId = _Undefined,
     _i2.TradeStatus? status,
+    Object? realizedPl = _Undefined,
     String? symbol,
     _i2.Option? option,
     Object? feeCurrency = _Undefined,
@@ -221,16 +171,11 @@ class _TradeImpl extends Trade {
     Object? takeProfit = _Undefined,
     Object? stopLoss = _Undefined,
   }) {
-    return Trade(
-      id: id is int? ? id : this.id,
-      linkedAccountId: linkedAccountId ?? this.linkedAccountId,
-      linkedAccount: linkedAccount is _i2.LinkedAccount?
-          ? linkedAccount
-          : this.linkedAccount?.copyWith(),
-      userId: userId ?? this.userId,
-      user: user is _i3.UserInfo? ? user : this.user?.copyWith(),
-      realizedPl: realizedPl is double? ? realizedPl : this.realizedPl,
+    return TradeDto(
+      linkedAccountId:
+          linkedAccountId is int? ? linkedAccountId : this.linkedAccountId,
       status: status ?? this.status,
+      realizedPl: realizedPl is double? ? realizedPl : this.realizedPl,
       symbol: symbol ?? this.symbol,
       option: option ?? this.option,
       feeCurrency: feeCurrency is String? ? feeCurrency : this.feeCurrency,

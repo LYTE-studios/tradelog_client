@@ -17,6 +17,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
     this.id,
     required this.userInfoId,
     required this.apiKey,
+    required this.refreshToken,
     required this.platform,
     this.tradelockerCredentialsId,
     this.tradelockerAccountId,
@@ -29,6 +30,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
     int? id,
     required int userInfoId,
     required String apiKey,
+    required String refreshToken,
     required _i2.Platform platform,
     int? tradelockerCredentialsId,
     List<String>? tradelockerAccountId,
@@ -42,6 +44,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
       id: jsonSerialization['id'] as int?,
       userInfoId: jsonSerialization['userInfoId'] as int,
       apiKey: jsonSerialization['apiKey'] as String,
+      refreshToken: jsonSerialization['refreshToken'] as String,
       platform: _i2.Platform.fromJson((jsonSerialization['platform'] as int)),
       tradelockerCredentialsId:
           jsonSerialization['tradelockerCredentialsId'] as int?,
@@ -65,6 +68,8 @@ abstract class LinkedAccount implements _i1.SerializableModel {
 
   String apiKey;
 
+  String refreshToken;
+
   _i2.Platform platform;
 
   int? tradelockerCredentialsId;
@@ -81,6 +86,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
     int? id,
     int? userInfoId,
     String? apiKey,
+    String? refreshToken,
     _i2.Platform? platform,
     int? tradelockerCredentialsId,
     List<String>? tradelockerAccountId,
@@ -94,6 +100,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
       if (id != null) 'id': id,
       'userInfoId': userInfoId,
       'apiKey': apiKey,
+      'refreshToken': refreshToken,
       'platform': platform.toJson(),
       if (tradelockerCredentialsId != null)
         'tradelockerCredentialsId': tradelockerCredentialsId,
@@ -119,6 +126,7 @@ class _LinkedAccountImpl extends LinkedAccount {
     int? id,
     required int userInfoId,
     required String apiKey,
+    required String refreshToken,
     required _i2.Platform platform,
     int? tradelockerCredentialsId,
     List<String>? tradelockerAccountId,
@@ -129,6 +137,7 @@ class _LinkedAccountImpl extends LinkedAccount {
           id: id,
           userInfoId: userInfoId,
           apiKey: apiKey,
+          refreshToken: refreshToken,
           platform: platform,
           tradelockerCredentialsId: tradelockerCredentialsId,
           tradelockerAccountId: tradelockerAccountId,
@@ -142,6 +151,7 @@ class _LinkedAccountImpl extends LinkedAccount {
     Object? id = _Undefined,
     int? userInfoId,
     String? apiKey,
+    String? refreshToken,
     _i2.Platform? platform,
     Object? tradelockerCredentialsId = _Undefined,
     Object? tradelockerAccountId = _Undefined,
@@ -153,6 +163,7 @@ class _LinkedAccountImpl extends LinkedAccount {
       id: id is int? ? id : this.id,
       userInfoId: userInfoId ?? this.userInfoId,
       apiKey: apiKey ?? this.apiKey,
+      refreshToken: refreshToken ?? this.refreshToken,
       platform: platform ?? this.platform,
       tradelockerCredentialsId: tradelockerCredentialsId is int?
           ? tradelockerCredentialsId

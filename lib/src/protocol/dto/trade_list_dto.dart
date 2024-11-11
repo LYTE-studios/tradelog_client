@@ -12,22 +12,22 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../protocol.dart' as _i2;
 
-abstract class DisplayTradeList implements _i1.SerializableModel {
-  DisplayTradeList._({required this.trades});
+abstract class TradeListDto implements _i1.SerializableModel {
+  TradeListDto._({required this.trades});
 
-  factory DisplayTradeList({required List<_i2.DisplayTrade> trades}) =
-      _DisplayTradeListImpl;
+  factory TradeListDto({required List<_i2.TradeDto> trades}) =
+      _TradeListDtoImpl;
 
-  factory DisplayTradeList.fromJson(Map<String, dynamic> jsonSerialization) {
-    return DisplayTradeList(
+  factory TradeListDto.fromJson(Map<String, dynamic> jsonSerialization) {
+    return TradeListDto(
         trades: (jsonSerialization['trades'] as List)
-            .map((e) => _i2.DisplayTrade.fromJson((e as Map<String, dynamic>)))
+            .map((e) => _i2.TradeDto.fromJson((e as Map<String, dynamic>)))
             .toList());
   }
 
-  List<_i2.DisplayTrade> trades;
+  List<_i2.TradeDto> trades;
 
-  DisplayTradeList copyWith({List<_i2.DisplayTrade>? trades});
+  TradeListDto copyWith({List<_i2.TradeDto>? trades});
   @override
   Map<String, dynamic> toJson() {
     return {'trades': trades.toJson(valueToJson: (v) => v.toJson())};
@@ -39,13 +39,13 @@ abstract class DisplayTradeList implements _i1.SerializableModel {
   }
 }
 
-class _DisplayTradeListImpl extends DisplayTradeList {
-  _DisplayTradeListImpl({required List<_i2.DisplayTrade> trades})
+class _TradeListDtoImpl extends TradeListDto {
+  _TradeListDtoImpl({required List<_i2.TradeDto> trades})
       : super._(trades: trades);
 
   @override
-  DisplayTradeList copyWith({List<_i2.DisplayTrade>? trades}) {
-    return DisplayTradeList(
+  TradeListDto copyWith({List<_i2.TradeDto>? trades}) {
+    return TradeListDto(
         trades: trades ?? this.trades.map((e0) => e0.copyWith()).toList());
   }
 }
