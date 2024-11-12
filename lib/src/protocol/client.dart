@@ -25,12 +25,10 @@ import 'package:tradelog_client/src/protocol/profile/tradely_profile.dart'
 import 'package:tradelog_client/src/protocol/statistics/overview_statistics.dart'
     as _i10;
 import 'package:tradelog_client/src/protocol/default/trade.dart' as _i11;
-import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_order.dart'
-    as _i12;
 import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_account_info.dart'
-    as _i13;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i14;
-import 'protocol.dart' as _i15;
+    as _i12;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
+import 'protocol.dart' as _i14;
 
 /// {@category Endpoint}
 class EndpointAccount extends _i1.EndpointRef {
@@ -78,11 +76,17 @@ class EndpointGlobal extends _i1.EndpointRef {
   /// Gets the trades from a session
   /// If the trades are already stored in cache, they get pulled from the session cache
   /// If they are not, they get fetched from their respective API's
-  _i2.Future<List<_i4.TradeDto>> getTrades() =>
+  _i2.Future<List<_i4.TradeDto>> getTrades({
+    DateTime? from,
+    DateTime? to,
+  }) =>
       caller.callServerEndpoint<List<_i4.TradeDto>>(
         'global',
         'getTrades',
-        {},
+        {
+          'from': from,
+          'to': to,
+        },
       );
 }
 
@@ -322,17 +326,24 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<void> refresh() => caller.callServerEndpoint<void>(
+  _i2.Future<_i3.LinkedAccount> refresh({required String apiKey}) =>
+      caller.callServerEndpoint<_i3.LinkedAccount>(
         'tradeLocker',
         'refresh',
-        {},
+        {'apiKey': apiKey},
       );
 
-  _i2.Future<List<_i4.TradeDto>> getAllTrades() =>
+  _i2.Future<List<_i4.TradeDto>> getAllTrades({
+    DateTime? from,
+    DateTime? to,
+  }) =>
       caller.callServerEndpoint<List<_i4.TradeDto>>(
         'tradeLocker',
         'getAllTrades',
-        {},
+        {
+          'from': from,
+          'to': to,
+        },
       );
 
   _i2.Future<Map<String, dynamic>> getRawOrders(_i3.LinkedAccount account) =>
@@ -342,28 +353,11 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         {'account': account},
       );
 
-  _i2.Future<List<_i12.TradelockerOrder>> getOrdersHistoryWithRateLimit({
-    required String apiKey,
-    required String refreshToken,
-    required int accountId,
-    required int accNum,
-  }) =>
-      caller.callServerEndpoint<List<_i12.TradelockerOrder>>(
-        'tradeLocker',
-        'getOrdersHistoryWithRateLimit',
-        {
-          'apiKey': apiKey,
-          'refreshToken': refreshToken,
-          'accountId': accountId,
-          'accNum': accNum,
-        },
-      );
-
-  _i2.Future<List<_i13.TradelockerAccountInformation>> getAccounts({
+  _i2.Future<List<_i12.TradelockerAccountInformation>> getAccounts({
     required String apiKey,
     required String refreshToken,
   }) =>
-      caller.callServerEndpoint<List<_i13.TradelockerAccountInformation>>(
+      caller.callServerEndpoint<List<_i12.TradelockerAccountInformation>>(
         'tradeLocker',
         'getAccounts',
         {
@@ -381,10 +375,10 @@ class EndpointTradeLocker extends _i1.EndpointRef {
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i14.Caller(client);
+    auth = _i13.Caller(client);
   }
 
-  late final _i14.Caller auth;
+  late final _i13.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -403,7 +397,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i15.Protocol(),
+          _i14.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,

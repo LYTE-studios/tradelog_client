@@ -48,11 +48,9 @@ import 'package:tradelog_client/src/protocol/meta/meta_trader_order.dart'
     as _i34;
 import 'package:tradelog_client/src/protocol/default/note.dart' as _i35;
 import 'package:tradelog_client/src/protocol/default/trade.dart' as _i36;
-import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_order.dart'
-    as _i37;
 import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_account_info.dart'
-    as _i38;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i39;
+    as _i37;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i38;
 export 'access_token.dart';
 export 'default/note.dart';
 export 'default/option.dart';
@@ -338,18 +336,13 @@ class Protocol extends _i1.SerializationManager {
       return (data as Map).map((k, v) =>
           MapEntry(deserialize<String>(k), deserialize<dynamic>(v))) as dynamic;
     }
-    if (t == List<_i37.TradelockerOrder>) {
+    if (t == List<_i37.TradelockerAccountInformation>) {
       return (data as List)
-          .map((e) => deserialize<_i37.TradelockerOrder>(e))
-          .toList() as dynamic;
-    }
-    if (t == List<_i38.TradelockerAccountInformation>) {
-      return (data as List)
-          .map((e) => deserialize<_i38.TradelockerAccountInformation>(e))
+          .map((e) => deserialize<_i37.TradelockerAccountInformation>(e))
           .toList() as dynamic;
     }
     try {
-      return _i39.Protocol().deserialize<T>(data, t);
+      return _i38.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -442,7 +435,7 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i29.TradingRules) {
       return 'TradingRules';
     }
-    className = _i39.Protocol().getClassNameForObject(data);
+    className = _i38.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -537,7 +530,7 @@ class Protocol extends _i1.SerializationManager {
     }
     if (data['className'].startsWith('serverpod_auth.')) {
       data['className'] = data['className'].substring(15);
-      return _i39.Protocol().deserializeByClassName(data);
+      return _i38.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }
