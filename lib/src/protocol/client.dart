@@ -297,6 +297,7 @@ class EndpointTradeLocker extends _i1.EndpointRef {
   String get name => 'tradeLocker';
 
   _i2.Future<void> initializeClient({
+    required String url,
     required String apiKey,
     required String refreshToken,
   }) =>
@@ -304,6 +305,7 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         'tradeLocker',
         'initializeClient',
         {
+          'url': url,
           'apiKey': apiKey,
           'refreshToken': refreshToken,
         },
@@ -314,6 +316,7 @@ class EndpointTradeLocker extends _i1.EndpointRef {
     String password,
     String server, {
     String? title,
+    required bool isDemo,
   }) =>
       caller.callServerEndpoint<String>(
         'tradeLocker',
@@ -323,6 +326,7 @@ class EndpointTradeLocker extends _i1.EndpointRef {
           'password': password,
           'server': server,
           'title': title,
+          'isDemo': isDemo,
         },
       );
 
@@ -354,6 +358,7 @@ class EndpointTradeLocker extends _i1.EndpointRef {
       );
 
   _i2.Future<List<_i12.TradelockerAccountInformation>> getAccounts({
+    required String apiUrl,
     required String apiKey,
     required String refreshToken,
   }) =>
@@ -361,6 +366,7 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         'tradeLocker',
         'getAccounts',
         {
+          'apiUrl': apiUrl,
           'apiKey': apiKey,
           'refreshToken': refreshToken,
         },

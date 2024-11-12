@@ -16,6 +16,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
   LinkedAccount._({
     this.id,
     required this.userInfoId,
+    required this.apiUrl,
     required this.apiKey,
     required this.refreshToken,
     required this.platform,
@@ -29,6 +30,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
   factory LinkedAccount({
     int? id,
     required int userInfoId,
+    required String apiUrl,
     required String apiKey,
     required String refreshToken,
     required _i2.Platform platform,
@@ -43,6 +45,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
     return LinkedAccount(
       id: jsonSerialization['id'] as int?,
       userInfoId: jsonSerialization['userInfoId'] as int,
+      apiUrl: jsonSerialization['apiUrl'] as String,
       apiKey: jsonSerialization['apiKey'] as String,
       refreshToken: jsonSerialization['refreshToken'] as String,
       platform: _i2.Platform.fromJson((jsonSerialization['platform'] as int)),
@@ -66,6 +69,8 @@ abstract class LinkedAccount implements _i1.SerializableModel {
 
   int userInfoId;
 
+  String apiUrl;
+
   String apiKey;
 
   String refreshToken;
@@ -85,6 +90,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
   LinkedAccount copyWith({
     int? id,
     int? userInfoId,
+    String? apiUrl,
     String? apiKey,
     String? refreshToken,
     _i2.Platform? platform,
@@ -99,6 +105,7 @@ abstract class LinkedAccount implements _i1.SerializableModel {
     return {
       if (id != null) 'id': id,
       'userInfoId': userInfoId,
+      'apiUrl': apiUrl,
       'apiKey': apiKey,
       'refreshToken': refreshToken,
       'platform': platform.toJson(),
@@ -125,6 +132,7 @@ class _LinkedAccountImpl extends LinkedAccount {
   _LinkedAccountImpl({
     int? id,
     required int userInfoId,
+    required String apiUrl,
     required String apiKey,
     required String refreshToken,
     required _i2.Platform platform,
@@ -136,6 +144,7 @@ class _LinkedAccountImpl extends LinkedAccount {
   }) : super._(
           id: id,
           userInfoId: userInfoId,
+          apiUrl: apiUrl,
           apiKey: apiKey,
           refreshToken: refreshToken,
           platform: platform,
@@ -150,6 +159,7 @@ class _LinkedAccountImpl extends LinkedAccount {
   LinkedAccount copyWith({
     Object? id = _Undefined,
     int? userInfoId,
+    String? apiUrl,
     String? apiKey,
     String? refreshToken,
     _i2.Platform? platform,
@@ -162,6 +172,7 @@ class _LinkedAccountImpl extends LinkedAccount {
     return LinkedAccount(
       id: id is int? ? id : this.id,
       userInfoId: userInfoId ?? this.userInfoId,
+      apiUrl: apiUrl ?? this.apiUrl,
       apiKey: apiKey ?? this.apiKey,
       refreshToken: refreshToken ?? this.refreshToken,
       platform: platform ?? this.platform,
