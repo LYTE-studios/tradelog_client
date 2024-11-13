@@ -10,7 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../protocol.dart' as _i2;
+import '../../protocol.dart' as _i2;
 
 abstract class TradeDto implements _i1.SerializableModel {
   TradeDto._({
@@ -26,6 +26,7 @@ abstract class TradeDto implements _i1.SerializableModel {
     required this.lotSize,
     this.takeProfit,
     this.stopLoss,
+    this.netRoi,
   });
 
   factory TradeDto({
@@ -41,6 +42,7 @@ abstract class TradeDto implements _i1.SerializableModel {
     required double lotSize,
     double? takeProfit,
     double? stopLoss,
+    double? netRoi,
   }) = _TradeDtoImpl;
 
   factory TradeDto.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -60,6 +62,7 @@ abstract class TradeDto implements _i1.SerializableModel {
       lotSize: (jsonSerialization['lotSize'] as num).toDouble(),
       takeProfit: (jsonSerialization['takeProfit'] as num?)?.toDouble(),
       stopLoss: (jsonSerialization['stopLoss'] as num?)?.toDouble(),
+      netRoi: (jsonSerialization['netRoi'] as num?)?.toDouble(),
     );
   }
 
@@ -87,6 +90,8 @@ abstract class TradeDto implements _i1.SerializableModel {
 
   double? stopLoss;
 
+  double? netRoi;
+
   TradeDto copyWith({
     int? linkedAccountId,
     _i2.TradeStatus? status,
@@ -100,6 +105,7 @@ abstract class TradeDto implements _i1.SerializableModel {
     double? lotSize,
     double? takeProfit,
     double? stopLoss,
+    double? netRoi,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -116,6 +122,7 @@ abstract class TradeDto implements _i1.SerializableModel {
       'lotSize': lotSize,
       if (takeProfit != null) 'takeProfit': takeProfit,
       if (stopLoss != null) 'stopLoss': stopLoss,
+      if (netRoi != null) 'netRoi': netRoi,
     };
   }
 
@@ -141,6 +148,7 @@ class _TradeDtoImpl extends TradeDto {
     required double lotSize,
     double? takeProfit,
     double? stopLoss,
+    double? netRoi,
   }) : super._(
           linkedAccountId: linkedAccountId,
           status: status,
@@ -154,6 +162,7 @@ class _TradeDtoImpl extends TradeDto {
           lotSize: lotSize,
           takeProfit: takeProfit,
           stopLoss: stopLoss,
+          netRoi: netRoi,
         );
 
   @override
@@ -170,6 +179,7 @@ class _TradeDtoImpl extends TradeDto {
     double? lotSize,
     Object? takeProfit = _Undefined,
     Object? stopLoss = _Undefined,
+    Object? netRoi = _Undefined,
   }) {
     return TradeDto(
       linkedAccountId:
@@ -185,6 +195,7 @@ class _TradeDtoImpl extends TradeDto {
       lotSize: lotSize ?? this.lotSize,
       takeProfit: takeProfit is double? ? takeProfit : this.takeProfit,
       stopLoss: stopLoss is double? ? stopLoss : this.stopLoss,
+      netRoi: netRoi is double? ? netRoi : this.netRoi,
     );
   }
 }

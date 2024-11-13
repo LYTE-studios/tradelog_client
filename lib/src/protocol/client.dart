@@ -11,24 +11,22 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'package:tradelog_client/src/protocol/linked_account.dart' as _i3;
-import 'package:tradelog_client/src/protocol/dto/trade_dto.dart' as _i4;
-import 'package:tradelog_client/src/protocol/meta/meta_account_information.dart'
+import 'package:tradelog_client/src/protocol/tables/linked_account.dart' as _i3;
+import 'package:tradelog_client/src/protocol/dto/trades/trade_dto.dart' as _i4;
+import 'package:tradelog_client/src/protocol/platforms/meta/meta_account_information.dart'
     as _i5;
-import 'package:tradelog_client/src/protocol/meta/meta_trader_position.dart'
+import 'package:tradelog_client/src/protocol/platforms/meta/meta_trader_position.dart'
     as _i6;
-import 'package:tradelog_client/src/protocol/meta/meta_trader_order.dart'
+import 'package:tradelog_client/src/protocol/platforms/meta/meta_trader_order.dart'
     as _i7;
-import 'package:tradelog_client/src/protocol/default/note.dart' as _i8;
+import 'package:tradelog_client/src/protocol/tables/note.dart' as _i8;
 import 'package:tradelog_client/src/protocol/profile/tradely_profile.dart'
     as _i9;
-import 'package:tradelog_client/src/protocol/statistics/overview_statistics.dart'
+import 'package:tradelog_client/src/protocol/dto/statistics/overview_statistics_dto.dart'
     as _i10;
-import 'package:tradelog_client/src/protocol/default/trade.dart' as _i11;
-import 'package:tradelog_client/src/protocol/tradelocker/tradelocker_account_info.dart'
-    as _i12;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
-import 'protocol.dart' as _i14;
+import 'package:tradelog_client/src/protocol/tables/trade.dart' as _i11;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i12;
+import 'protocol.dart' as _i13;
 
 /// {@category Endpoint}
 class EndpointAccount extends _i1.EndpointRef {
@@ -245,8 +243,8 @@ class EndpointStatistics extends _i1.EndpointRef {
   @override
   String get name => 'statistics';
 
-  _i2.Future<_i10.OverviewStatistics> getOverviewStatistics() =>
-      caller.callServerEndpoint<_i10.OverviewStatistics>(
+  _i2.Future<_i10.OverviewStatisticsDto> getOverviewStatistics() =>
+      caller.callServerEndpoint<_i10.OverviewStatisticsDto>(
         'statistics',
         'getOverviewStatistics',
         {},
@@ -357,21 +355,6 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         {'account': account},
       );
 
-  _i2.Future<List<_i12.TradelockerAccountInformation>> getAccounts({
-    required String apiUrl,
-    required String apiKey,
-    required String refreshToken,
-  }) =>
-      caller.callServerEndpoint<List<_i12.TradelockerAccountInformation>>(
-        'tradeLocker',
-        'getAccounts',
-        {
-          'apiUrl': apiUrl,
-          'apiKey': apiKey,
-          'refreshToken': refreshToken,
-        },
-      );
-
   _i2.Future<void> reauthenticate() => caller.callServerEndpoint<void>(
         'tradeLocker',
         'reauthenticate',
@@ -381,10 +364,10 @@ class EndpointTradeLocker extends _i1.EndpointRef {
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i13.Caller(client);
+    auth = _i12.Caller(client);
   }
 
-  late final _i13.Caller auth;
+  late final _i12.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -403,7 +386,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i14.Protocol(),
+          _i13.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
