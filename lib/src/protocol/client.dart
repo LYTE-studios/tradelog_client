@@ -11,7 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'package:tradelog_client/src/protocol/tables/linked_account.dart' as _i3;
+import 'package:tradelog_client/src/protocol/dto/trades/linked_account_dto.dart'
+    as _i3;
 import 'package:tradelog_client/src/protocol/dto/trades/trade_dto.dart' as _i4;
 import 'package:tradelog_client/src/protocol/platforms/meta/meta_account_information.dart'
     as _i5;
@@ -25,8 +26,10 @@ import 'package:tradelog_client/src/protocol/profile/tradely_profile.dart'
 import 'package:tradelog_client/src/protocol/dto/statistics/overview_statistics_dto.dart'
     as _i10;
 import 'package:tradelog_client/src/protocol/tables/trade.dart' as _i11;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i12;
-import 'protocol.dart' as _i13;
+import 'package:tradelog_client/src/protocol/tables/linked_account.dart'
+    as _i12;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
+import 'protocol.dart' as _i14;
 
 /// {@category Endpoint}
 class EndpointAccount extends _i1.EndpointRef {
@@ -35,8 +38,8 @@ class EndpointAccount extends _i1.EndpointRef {
   @override
   String get name => 'account';
 
-  _i2.Future<List<_i3.LinkedAccount>> fetchAccounts() =>
-      caller.callServerEndpoint<List<_i3.LinkedAccount>>(
+  _i2.Future<List<_i3.LinkedAccountDto>> fetchAccounts() =>
+      caller.callServerEndpoint<List<_i3.LinkedAccountDto>>(
         'account',
         'fetchAccounts',
         {},
@@ -328,11 +331,19 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<_i3.LinkedAccount> refresh({required String apiKey}) =>
-      caller.callServerEndpoint<_i3.LinkedAccount>(
+  _i2.Future<_i12.LinkedAccount> refresh({required String apiKey}) =>
+      caller.callServerEndpoint<_i12.LinkedAccount>(
         'tradeLocker',
         'refresh',
         {'apiKey': apiKey},
+      );
+
+  _i2.Future<_i3.LinkedAccountDto> getAccountDto(
+          _i12.LinkedAccount linkedAccount) =>
+      caller.callServerEndpoint<_i3.LinkedAccountDto>(
+        'tradeLocker',
+        'getAccountDto',
+        {'linkedAccount': linkedAccount},
       );
 
   _i2.Future<List<_i4.TradeDto>> getAllTrades({
@@ -348,7 +359,7 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<Map<String, dynamic>> getRawOrders(_i3.LinkedAccount account) =>
+  _i2.Future<Map<String, dynamic>> getRawOrders(_i12.LinkedAccount account) =>
       caller.callServerEndpoint<Map<String, dynamic>>(
         'tradeLocker',
         'getRawOrders',
@@ -364,10 +375,10 @@ class EndpointTradeLocker extends _i1.EndpointRef {
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i12.Caller(client);
+    auth = _i13.Caller(client);
   }
 
-  late final _i12.Caller auth;
+  late final _i13.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -386,7 +397,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i13.Protocol(),
+          _i14.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
