@@ -347,6 +347,11 @@ class Protocol extends _i1.SerializationManager {
       return (data as List).map((e) => deserialize<_i36.Note>(e)).toList()
           as dynamic;
     }
+    if (t == Map<DateTime, double>) {
+      return Map.fromEntries((data as List).map((e) => MapEntry(
+              deserialize<DateTime>(e['k']), deserialize<double>(e['v']))))
+          as dynamic;
+    }
     if (t == List<_i37.Trade>) {
       return (data as List).map((e) => deserialize<_i37.Trade>(e)).toList()
           as dynamic;

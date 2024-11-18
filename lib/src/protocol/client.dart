@@ -246,6 +246,13 @@ class EndpointStatistics extends _i1.EndpointRef {
   @override
   String get name => 'statistics';
 
+  _i2.Future<Map<DateTime, double>> getAccountBalanceChart() =>
+      caller.callServerEndpoint<Map<DateTime, double>>(
+        'statistics',
+        'getAccountBalanceChart',
+        {},
+      );
+
   _i2.Future<_i10.OverviewStatisticsDto> getOverviewStatistics() =>
       caller.callServerEndpoint<_i10.OverviewStatisticsDto>(
         'statistics',
