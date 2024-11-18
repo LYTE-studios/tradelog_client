@@ -23,6 +23,7 @@ abstract class OverviewStatisticsDto implements _i1.SerializableModel {
     this.longTradesAmount,
     this.averageHoldingTime,
     this.profitFactor,
+    this.equityChartData,
   });
 
   factory OverviewStatisticsDto({
@@ -36,6 +37,7 @@ abstract class OverviewStatisticsDto implements _i1.SerializableModel {
     int? longTradesAmount,
     double? averageHoldingTime,
     double? profitFactor,
+    Map<DateTime, double>? equityChartData,
   }) = _OverviewStatisticsDtoImpl;
 
   factory OverviewStatisticsDto.fromJson(
@@ -58,6 +60,14 @@ abstract class OverviewStatisticsDto implements _i1.SerializableModel {
       averageHoldingTime:
           (jsonSerialization['averageHoldingTime'] as num?)?.toDouble(),
       profitFactor: (jsonSerialization['profitFactor'] as num?)?.toDouble(),
+      equityChartData: (jsonSerialization['equityChartData'] as List?)
+          ?.fold<Map<DateTime, double>>(
+              {},
+              (t, e) => {
+                    ...t,
+                    _i1.DateTimeJsonExtension.fromJson(e['k']):
+                        (e['v'] as num).toDouble()
+                  }),
     );
   }
 
@@ -81,6 +91,8 @@ abstract class OverviewStatisticsDto implements _i1.SerializableModel {
 
   double? profitFactor;
 
+  Map<DateTime, double>? equityChartData;
+
   OverviewStatisticsDto copyWith({
     double? netProfitLossThisMonth,
     double? netProfitLossTrend,
@@ -92,6 +104,7 @@ abstract class OverviewStatisticsDto implements _i1.SerializableModel {
     int? longTradesAmount,
     double? averageHoldingTime,
     double? profitFactor,
+    Map<DateTime, double>? equityChartData,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -110,6 +123,9 @@ abstract class OverviewStatisticsDto implements _i1.SerializableModel {
       if (longTradesAmount != null) 'longTradesAmount': longTradesAmount,
       if (averageHoldingTime != null) 'averageHoldingTime': averageHoldingTime,
       if (profitFactor != null) 'profitFactor': profitFactor,
+      if (equityChartData != null)
+        'equityChartData':
+            equityChartData?.toJson(keyToJson: (k) => k.toJson()),
     };
   }
 
@@ -133,6 +149,7 @@ class _OverviewStatisticsDtoImpl extends OverviewStatisticsDto {
     int? longTradesAmount,
     double? averageHoldingTime,
     double? profitFactor,
+    Map<DateTime, double>? equityChartData,
   }) : super._(
           netProfitLossThisMonth: netProfitLossThisMonth,
           netProfitLossTrend: netProfitLossTrend,
@@ -144,6 +161,7 @@ class _OverviewStatisticsDtoImpl extends OverviewStatisticsDto {
           longTradesAmount: longTradesAmount,
           averageHoldingTime: averageHoldingTime,
           profitFactor: profitFactor,
+          equityChartData: equityChartData,
         );
 
   @override
@@ -158,6 +176,7 @@ class _OverviewStatisticsDtoImpl extends OverviewStatisticsDto {
     Object? longTradesAmount = _Undefined,
     Object? averageHoldingTime = _Undefined,
     Object? profitFactor = _Undefined,
+    Object? equityChartData = _Undefined,
   }) {
     return OverviewStatisticsDto(
       netProfitLossThisMonth: netProfitLossThisMonth is double?
@@ -187,6 +206,16 @@ class _OverviewStatisticsDtoImpl extends OverviewStatisticsDto {
           ? averageHoldingTime
           : this.averageHoldingTime,
       profitFactor: profitFactor is double? ? profitFactor : this.profitFactor,
+      equityChartData: equityChartData is Map<DateTime, double>?
+          ? equityChartData
+          : this.equityChartData?.map((
+                key0,
+                value0,
+              ) =>
+                  MapEntry(
+                    key0,
+                    value0,
+                  )),
     );
   }
 }
