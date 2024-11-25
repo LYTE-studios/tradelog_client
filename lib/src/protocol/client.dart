@@ -11,22 +11,23 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'package:tradelog_client/src/protocol/tables/linked_account.dart' as _i3;
 import 'package:tradelog_client/src/protocol/dto/trades/linked_account_dto.dart'
-    as _i4;
-import 'package:tradelog_client/src/protocol/dto/trades/trade_dto.dart' as _i5;
+    as _i3;
+import 'package:tradelog_client/src/protocol/dto/trades/trade_dto.dart' as _i4;
 import 'package:tradelog_client/src/protocol/platforms/meta/meta_account_information.dart'
-    as _i6;
+    as _i5;
 import 'package:tradelog_client/src/protocol/platforms/meta/meta_trader_position.dart'
-    as _i7;
+    as _i6;
 import 'package:tradelog_client/src/protocol/platforms/meta/meta_trader_order.dart'
-    as _i8;
-import 'package:tradelog_client/src/protocol/tables/note.dart' as _i9;
+    as _i7;
+import 'package:tradelog_client/src/protocol/tables/note.dart' as _i8;
 import 'package:tradelog_client/src/protocol/profile/tradely_profile.dart'
-    as _i10;
+    as _i9;
 import 'package:tradelog_client/src/protocol/dto/statistics/overview_statistics_dto.dart'
-    as _i11;
-import 'package:tradelog_client/src/protocol/tables/trade.dart' as _i12;
+    as _i10;
+import 'package:tradelog_client/src/protocol/tables/trade.dart' as _i11;
+import 'package:tradelog_client/src/protocol/tables/linked_account.dart'
+    as _i12;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
 import 'protocol.dart' as _i14;
 
@@ -37,15 +38,15 @@ class EndpointAccount extends _i1.EndpointRef {
   @override
   String get name => 'account';
 
-  _i2.Future<void> removeAccount(_i3.LinkedAccount account) =>
+  _i2.Future<void> removeAccount(int accountId) =>
       caller.callServerEndpoint<void>(
         'account',
         'removeAccount',
-        {'account': account},
+        {'accountId': accountId},
       );
 
-  _i2.Future<List<_i4.LinkedAccountDto>> fetchAccounts() =>
-      caller.callServerEndpoint<List<_i4.LinkedAccountDto>>(
+  _i2.Future<List<_i3.LinkedAccountDto>> fetchAccounts() =>
+      caller.callServerEndpoint<List<_i3.LinkedAccountDto>>(
         'account',
         'fetchAccounts',
         {},
@@ -83,11 +84,11 @@ class EndpointGlobal extends _i1.EndpointRef {
   /// Gets the trades from a session
   /// If the trades are already stored in cache, they get pulled from the session cache
   /// If they are not, they get fetched from their respective API's
-  _i2.Future<List<_i5.TradeDto>> getTrades({
+  _i2.Future<List<_i4.TradeDto>> getTrades({
     DateTime? from,
     DateTime? to,
   }) =>
-      caller.callServerEndpoint<List<_i5.TradeDto>>(
+      caller.callServerEndpoint<List<_i4.TradeDto>>(
         'global',
         'getTrades',
         {
@@ -141,9 +142,9 @@ class EndpointMetaApi extends _i1.EndpointRef {
   /// Retrieves the account information for the specified MetaTrader account.
   /// Initializes the MetaApiClient if not already initialized.
   /// Returns a [MetaTradingAccountInformation] object if successful, otherwise throws an exception.
-  _i2.Future<_i6.MetaTradingAccountInformation> getAccountInformation(
+  _i2.Future<_i5.MetaTradingAccountInformation> getAccountInformation(
           String accountId) =>
-      caller.callServerEndpoint<_i6.MetaTradingAccountInformation>(
+      caller.callServerEndpoint<_i5.MetaTradingAccountInformation>(
         'metaApi',
         'getAccountInformation',
         {'accountId': accountId},
@@ -152,15 +153,15 @@ class EndpointMetaApi extends _i1.EndpointRef {
   /// Retrieves the list of open positions for the specified MetaTrader account.
   /// Initializes the MetaApiClient if not already initialized.
   /// Returns a list of [MetatraderPosition] objects if successful, otherwise throws an exception.
-  _i2.Future<List<_i7.MetatraderPosition>> getPositions(String accountId) =>
-      caller.callServerEndpoint<List<_i7.MetatraderPosition>>(
+  _i2.Future<List<_i6.MetatraderPosition>> getPositions(String accountId) =>
+      caller.callServerEndpoint<List<_i6.MetatraderPosition>>(
         'metaApi',
         'getPositions',
         {'accountId': accountId},
       );
 
-  _i2.Future<List<_i5.TradeDto>> getTrades(String accountId) =>
-      caller.callServerEndpoint<List<_i5.TradeDto>>(
+  _i2.Future<List<_i4.TradeDto>> getTrades(String accountId) =>
+      caller.callServerEndpoint<List<_i4.TradeDto>>(
         'metaApi',
         'getTrades',
         {'accountId': accountId},
@@ -169,8 +170,8 @@ class EndpointMetaApi extends _i1.EndpointRef {
   /// Retrieves the list of open orders for the specified MetaTrader account.
   /// Initializes the MetaApiClient if not already initialized.
   /// Returns a list of [MetatraderOrder] objects if successful, otherwise throws an exception.
-  _i2.Future<List<_i8.MetatraderOrder>> getOrders(String accountId) =>
-      caller.callServerEndpoint<List<_i8.MetatraderOrder>>(
+  _i2.Future<List<_i7.MetatraderOrder>> getOrders(String accountId) =>
+      caller.callServerEndpoint<List<_i7.MetatraderOrder>>(
         'metaApi',
         'getOrders',
         {'accountId': accountId},
@@ -202,27 +203,27 @@ class EndpointNote extends _i1.EndpointRef {
   @override
   String get name => 'note';
 
-  _i2.Future<_i9.Note> getNoteForDate(DateTime date) =>
-      caller.callServerEndpoint<_i9.Note>(
+  _i2.Future<_i8.Note> getNoteForDate(DateTime date) =>
+      caller.callServerEndpoint<_i8.Note>(
         'note',
         'getNoteForDate',
         {'date': date},
       );
 
-  _i2.Future<void> deleteNote(_i9.Note note) => caller.callServerEndpoint<void>(
+  _i2.Future<void> deleteNote(_i8.Note note) => caller.callServerEndpoint<void>(
         'note',
         'deleteNote',
         {'note': note},
       );
 
-  _i2.Future<void> updateNote(_i9.Note note) => caller.callServerEndpoint<void>(
+  _i2.Future<void> updateNote(_i8.Note note) => caller.callServerEndpoint<void>(
         'note',
         'updateNote',
         {'note': note},
       );
 
-  _i2.Future<List<_i9.Note>> getNotes() =>
-      caller.callServerEndpoint<List<_i9.Note>>(
+  _i2.Future<List<_i8.Note>> getNotes() =>
+      caller.callServerEndpoint<List<_i8.Note>>(
         'note',
         'getNotes',
         {},
@@ -236,15 +237,15 @@ class EndpointProfile extends _i1.EndpointRef {
   @override
   String get name => 'profile';
 
-  _i2.Future<void> updateProfile(_i10.TradelyProfile profile) =>
+  _i2.Future<void> updateProfile(_i9.TradelyProfile profile) =>
       caller.callServerEndpoint<void>(
         'profile',
         'updateProfile',
         {'profile': profile},
       );
 
-  _i2.Future<_i10.TradelyProfile> getProfile() =>
-      caller.callServerEndpoint<_i10.TradelyProfile>(
+  _i2.Future<_i9.TradelyProfile> getProfile() =>
+      caller.callServerEndpoint<_i9.TradelyProfile>(
         'profile',
         'getProfile',
         {},
@@ -265,8 +266,8 @@ class EndpointStatistics extends _i1.EndpointRef {
         {},
       );
 
-  _i2.Future<_i11.OverviewStatisticsDto> getOverviewStatistics() =>
-      caller.callServerEndpoint<_i11.OverviewStatisticsDto>(
+  _i2.Future<_i10.OverviewStatisticsDto> getOverviewStatistics() =>
+      caller.callServerEndpoint<_i10.OverviewStatisticsDto>(
         'statistics',
         'getOverviewStatistics',
         {},
@@ -280,22 +281,22 @@ class EndpointTrade extends _i1.EndpointRef {
   @override
   String get name => 'trade';
 
-  _i2.Future<void> addTrade(_i5.TradeDto dto) =>
+  _i2.Future<void> addTrade(_i4.TradeDto dto) =>
       caller.callServerEndpoint<void>(
         'trade',
         'addTrade',
         {'dto': dto},
       );
 
-  _i2.Future<void> deleteTrade(_i12.Trade trade) =>
+  _i2.Future<void> deleteTrade(_i11.Trade trade) =>
       caller.callServerEndpoint<void>(
         'trade',
         'deleteTrade',
         {'trade': trade},
       );
 
-  _i2.Future<List<_i12.Trade>> fetchTrades() =>
-      caller.callServerEndpoint<List<_i12.Trade>>(
+  _i2.Future<List<_i11.Trade>> fetchTrades() =>
+      caller.callServerEndpoint<List<_i11.Trade>>(
         'trade',
         'fetchTrades',
         {},
@@ -350,26 +351,26 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<_i3.LinkedAccount> refresh({required String apiKey}) =>
-      caller.callServerEndpoint<_i3.LinkedAccount>(
+  _i2.Future<_i12.LinkedAccount> refresh({required String apiKey}) =>
+      caller.callServerEndpoint<_i12.LinkedAccount>(
         'tradeLocker',
         'refresh',
         {'apiKey': apiKey},
       );
 
-  _i2.Future<_i4.LinkedAccountDto> getAccountDto(
-          _i3.LinkedAccount linkedAccount) =>
-      caller.callServerEndpoint<_i4.LinkedAccountDto>(
+  _i2.Future<_i3.LinkedAccountDto> getAccountDto(
+          _i12.LinkedAccount linkedAccount) =>
+      caller.callServerEndpoint<_i3.LinkedAccountDto>(
         'tradeLocker',
         'getAccountDto',
         {'linkedAccount': linkedAccount},
       );
 
-  _i2.Future<List<_i5.TradeDto>> getAllTrades({
+  _i2.Future<List<_i4.TradeDto>> getAllTrades({
     DateTime? from,
     DateTime? to,
   }) =>
-      caller.callServerEndpoint<List<_i5.TradeDto>>(
+      caller.callServerEndpoint<List<_i4.TradeDto>>(
         'tradeLocker',
         'getAllTrades',
         {
@@ -378,15 +379,15 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<Map<String, dynamic>> getRawOrders(_i3.LinkedAccount account) =>
+  _i2.Future<Map<String, dynamic>> getRawOrders(_i12.LinkedAccount account) =>
       caller.callServerEndpoint<Map<String, dynamic>>(
         'tradeLocker',
         'getRawOrders',
         {'account': account},
       );
 
-  _i2.Future<_i3.LinkedAccount> reauthenticateAccount(String apiKey) =>
-      caller.callServerEndpoint<_i3.LinkedAccount>(
+  _i2.Future<_i12.LinkedAccount> reauthenticateAccount(String apiKey) =>
+      caller.callServerEndpoint<_i12.LinkedAccount>(
         'tradeLocker',
         'reauthenticateAccount',
         {'apiKey': apiKey},
