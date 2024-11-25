@@ -266,11 +266,17 @@ class EndpointStatistics extends _i1.EndpointRef {
         {},
       );
 
-  _i2.Future<_i10.OverviewStatisticsDto> getOverviewStatistics() =>
+  _i2.Future<_i10.OverviewStatisticsDto> getOverviewStatistics({
+    DateTime? from,
+    DateTime? to,
+  }) =>
       caller.callServerEndpoint<_i10.OverviewStatisticsDto>(
         'statistics',
         'getOverviewStatistics',
-        {},
+        {
+          'from': from,
+          'to': to,
+        },
       );
 }
 
