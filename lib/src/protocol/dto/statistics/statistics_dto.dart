@@ -27,6 +27,7 @@ abstract class StatisticsDto implements _i1.SerializableModel {
     this.averageTradingMonth,
     this.maxWinStreak,
     this.averageWinStreak,
+    this.equityChart,
   });
 
   factory StatisticsDto({
@@ -44,6 +45,7 @@ abstract class StatisticsDto implements _i1.SerializableModel {
     double? averageTradingMonth,
     int? maxWinStreak,
     double? averageWinStreak,
+    Map<DateTime, double>? equityChart,
   }) = _StatisticsDtoImpl;
 
   factory StatisticsDto.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -69,6 +71,14 @@ abstract class StatisticsDto implements _i1.SerializableModel {
       maxWinStreak: jsonSerialization['maxWinStreak'] as int?,
       averageWinStreak:
           (jsonSerialization['averageWinStreak'] as num?)?.toDouble(),
+      equityChart: (jsonSerialization['equityChart'] as List?)
+          ?.fold<Map<DateTime, double>>(
+              {},
+              (t, e) => {
+                    ...t,
+                    _i1.DateTimeJsonExtension.fromJson(e['k']):
+                        (e['v'] as num).toDouble()
+                  }),
     );
   }
 
@@ -100,6 +110,8 @@ abstract class StatisticsDto implements _i1.SerializableModel {
 
   double? averageWinStreak;
 
+  Map<DateTime, double>? equityChart;
+
   StatisticsDto copyWith({
     double? totalPL,
     double? averageWinningTrade,
@@ -115,6 +127,7 @@ abstract class StatisticsDto implements _i1.SerializableModel {
     double? averageTradingMonth,
     int? maxWinStreak,
     double? averageWinStreak,
+    Map<DateTime, double>? equityChart,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -138,6 +151,8 @@ abstract class StatisticsDto implements _i1.SerializableModel {
         'averageTradingMonth': averageTradingMonth,
       if (maxWinStreak != null) 'maxWinStreak': maxWinStreak,
       if (averageWinStreak != null) 'averageWinStreak': averageWinStreak,
+      if (equityChart != null)
+        'equityChart': equityChart?.toJson(keyToJson: (k) => k.toJson()),
     };
   }
 
@@ -165,6 +180,7 @@ class _StatisticsDtoImpl extends StatisticsDto {
     double? averageTradingMonth,
     int? maxWinStreak,
     double? averageWinStreak,
+    Map<DateTime, double>? equityChart,
   }) : super._(
           totalPL: totalPL,
           averageWinningTrade: averageWinningTrade,
@@ -180,6 +196,7 @@ class _StatisticsDtoImpl extends StatisticsDto {
           averageTradingMonth: averageTradingMonth,
           maxWinStreak: maxWinStreak,
           averageWinStreak: averageWinStreak,
+          equityChart: equityChart,
         );
 
   @override
@@ -198,6 +215,7 @@ class _StatisticsDtoImpl extends StatisticsDto {
     Object? averageTradingMonth = _Undefined,
     Object? maxWinStreak = _Undefined,
     Object? averageWinStreak = _Undefined,
+    Object? equityChart = _Undefined,
   }) {
     return StatisticsDto(
       totalPL: totalPL is double? ? totalPL : this.totalPL,
@@ -233,6 +251,16 @@ class _StatisticsDtoImpl extends StatisticsDto {
       averageWinStreak: averageWinStreak is double?
           ? averageWinStreak
           : this.averageWinStreak,
+      equityChart: equityChart is Map<DateTime, double>?
+          ? equityChart
+          : this.equityChart?.map((
+                key0,
+                value0,
+              ) =>
+                  MapEntry(
+                    key0,
+                    value0,
+                  )),
     );
   }
 }
