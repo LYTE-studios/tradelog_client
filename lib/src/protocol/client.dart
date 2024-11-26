@@ -25,11 +25,13 @@ import 'package:tradelog_client/src/protocol/profile/tradely_profile.dart'
     as _i9;
 import 'package:tradelog_client/src/protocol/dto/statistics/overview_statistics_dto.dart'
     as _i10;
-import 'package:tradelog_client/src/protocol/tables/trade.dart' as _i11;
+import 'package:tradelog_client/src/protocol/dto/statistics/statistics_dto.dart'
+    as _i11;
+import 'package:tradelog_client/src/protocol/tables/trade.dart' as _i12;
 import 'package:tradelog_client/src/protocol/tables/linked_account.dart'
-    as _i12;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
-import 'protocol.dart' as _i14;
+    as _i13;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i14;
+import 'protocol.dart' as _i15;
 
 /// {@category Endpoint}
 class EndpointAccount extends _i1.EndpointRef {
@@ -160,11 +162,32 @@ class EndpointMetaApi extends _i1.EndpointRef {
         {'accountId': accountId},
       );
 
-  _i2.Future<List<_i4.TradeDto>> getTrades(String accountId) =>
+  _i2.Future<List<_i4.TradeDto>> getAllTrades({
+    DateTime? from,
+    DateTime? to,
+  }) =>
+      caller.callServerEndpoint<List<_i4.TradeDto>>(
+        'metaApi',
+        'getAllTrades',
+        {
+          'from': from,
+          'to': to,
+        },
+      );
+
+  _i2.Future<List<_i4.TradeDto>> getTrades({
+    required String accountId,
+    DateTime? from,
+    DateTime? to,
+  }) =>
       caller.callServerEndpoint<List<_i4.TradeDto>>(
         'metaApi',
         'getTrades',
-        {'accountId': accountId},
+        {
+          'accountId': accountId,
+          'from': from,
+          'to': to,
+        },
       );
 
   /// Retrieves the list of open orders for the specified MetaTrader account.
@@ -259,11 +282,24 @@ class EndpointStatistics extends _i1.EndpointRef {
   @override
   String get name => 'statistics';
 
-  _i2.Future<Map<DateTime, double>> getAccountBalanceChart() =>
+  _i2.Future<Map<DateTime, double>> getPnlChart() =>
+      caller.callServerEndpoint<Map<DateTime, double>>(
+        'statistics',
+        'getPnlChart',
+        {},
+      );
+
+  _i2.Future<Map<DateTime, double>> getAccountBalanceChart({
+    DateTime? from,
+    DateTime? to,
+  }) =>
       caller.callServerEndpoint<Map<DateTime, double>>(
         'statistics',
         'getAccountBalanceChart',
-        {},
+        {
+          'from': from,
+          'to': to,
+        },
       );
 
   _i2.Future<_i10.OverviewStatisticsDto> getOverviewStatistics({
@@ -273,6 +309,32 @@ class EndpointStatistics extends _i1.EndpointRef {
       caller.callServerEndpoint<_i10.OverviewStatisticsDto>(
         'statistics',
         'getOverviewStatistics',
+        {
+          'from': from,
+          'to': to,
+        },
+      );
+
+  _i2.Future<_i11.StatisticsDto> getStatistics({
+    DateTime? from,
+    DateTime? to,
+  }) =>
+      caller.callServerEndpoint<_i11.StatisticsDto>(
+        'statistics',
+        'getStatistics',
+        {
+          'from': from,
+          'to': to,
+        },
+      );
+
+  _i2.Future<_i11.StatisticsDto> getDiaryStatistics({
+    DateTime? from,
+    DateTime? to,
+  }) =>
+      caller.callServerEndpoint<_i11.StatisticsDto>(
+        'statistics',
+        'getDiaryStatistics',
         {
           'from': from,
           'to': to,
@@ -294,15 +356,15 @@ class EndpointTrade extends _i1.EndpointRef {
         {'dto': dto},
       );
 
-  _i2.Future<void> deleteTrade(_i11.Trade trade) =>
+  _i2.Future<void> deleteTrade(_i12.Trade trade) =>
       caller.callServerEndpoint<void>(
         'trade',
         'deleteTrade',
         {'trade': trade},
       );
 
-  _i2.Future<List<_i11.Trade>> fetchTrades() =>
-      caller.callServerEndpoint<List<_i11.Trade>>(
+  _i2.Future<List<_i12.Trade>> fetchTrades() =>
+      caller.callServerEndpoint<List<_i12.Trade>>(
         'trade',
         'fetchTrades',
         {},
@@ -357,15 +419,15 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<_i12.LinkedAccount> refresh({required String apiKey}) =>
-      caller.callServerEndpoint<_i12.LinkedAccount>(
+  _i2.Future<_i13.LinkedAccount> refresh({required String apiKey}) =>
+      caller.callServerEndpoint<_i13.LinkedAccount>(
         'tradeLocker',
         'refresh',
         {'apiKey': apiKey},
       );
 
   _i2.Future<_i3.LinkedAccountDto> getAccountDto(
-          _i12.LinkedAccount linkedAccount) =>
+          _i13.LinkedAccount linkedAccount) =>
       caller.callServerEndpoint<_i3.LinkedAccountDto>(
         'tradeLocker',
         'getAccountDto',
@@ -385,15 +447,15 @@ class EndpointTradeLocker extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<Map<String, dynamic>> getRawOrders(_i12.LinkedAccount account) =>
+  _i2.Future<Map<String, dynamic>> getRawOrders(_i13.LinkedAccount account) =>
       caller.callServerEndpoint<Map<String, dynamic>>(
         'tradeLocker',
         'getRawOrders',
         {'account': account},
       );
 
-  _i2.Future<_i12.LinkedAccount> reauthenticateAccount(String apiKey) =>
-      caller.callServerEndpoint<_i12.LinkedAccount>(
+  _i2.Future<_i13.LinkedAccount> reauthenticateAccount(String apiKey) =>
+      caller.callServerEndpoint<_i13.LinkedAccount>(
         'tradeLocker',
         'reauthenticateAccount',
         {'apiKey': apiKey},
@@ -408,10 +470,10 @@ class EndpointTradeLocker extends _i1.EndpointRef {
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i13.Caller(client);
+    auth = _i14.Caller(client);
   }
 
-  late final _i13.Caller auth;
+  late final _i14.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -430,7 +492,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i14.Protocol(),
+          _i15.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,

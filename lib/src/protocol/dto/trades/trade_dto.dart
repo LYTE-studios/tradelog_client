@@ -23,6 +23,7 @@ abstract class TradeDto implements _i1.SerializableModel {
     this.fee,
     required this.openTime,
     this.closeTime,
+    this.holdTime,
     required this.lotSize,
     this.takeProfit,
     this.stopLoss,
@@ -39,6 +40,7 @@ abstract class TradeDto implements _i1.SerializableModel {
     double? fee,
     required DateTime openTime,
     DateTime? closeTime,
+    double? holdTime,
     required double lotSize,
     double? takeProfit,
     double? stopLoss,
@@ -59,6 +61,7 @@ abstract class TradeDto implements _i1.SerializableModel {
       closeTime: jsonSerialization['closeTime'] == null
           ? null
           : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['closeTime']),
+      holdTime: (jsonSerialization['holdTime'] as num?)?.toDouble(),
       lotSize: (jsonSerialization['lotSize'] as num).toDouble(),
       takeProfit: (jsonSerialization['takeProfit'] as num?)?.toDouble(),
       stopLoss: (jsonSerialization['stopLoss'] as num?)?.toDouble(),
@@ -84,6 +87,8 @@ abstract class TradeDto implements _i1.SerializableModel {
 
   DateTime? closeTime;
 
+  double? holdTime;
+
   double lotSize;
 
   double? takeProfit;
@@ -102,6 +107,7 @@ abstract class TradeDto implements _i1.SerializableModel {
     double? fee,
     DateTime? openTime,
     DateTime? closeTime,
+    double? holdTime,
     double? lotSize,
     double? takeProfit,
     double? stopLoss,
@@ -119,6 +125,7 @@ abstract class TradeDto implements _i1.SerializableModel {
       if (fee != null) 'fee': fee,
       'openTime': openTime.toJson(),
       if (closeTime != null) 'closeTime': closeTime?.toJson(),
+      if (holdTime != null) 'holdTime': holdTime,
       'lotSize': lotSize,
       if (takeProfit != null) 'takeProfit': takeProfit,
       if (stopLoss != null) 'stopLoss': stopLoss,
@@ -145,6 +152,7 @@ class _TradeDtoImpl extends TradeDto {
     double? fee,
     required DateTime openTime,
     DateTime? closeTime,
+    double? holdTime,
     required double lotSize,
     double? takeProfit,
     double? stopLoss,
@@ -159,6 +167,7 @@ class _TradeDtoImpl extends TradeDto {
           fee: fee,
           openTime: openTime,
           closeTime: closeTime,
+          holdTime: holdTime,
           lotSize: lotSize,
           takeProfit: takeProfit,
           stopLoss: stopLoss,
@@ -176,6 +185,7 @@ class _TradeDtoImpl extends TradeDto {
     Object? fee = _Undefined,
     DateTime? openTime,
     Object? closeTime = _Undefined,
+    Object? holdTime = _Undefined,
     double? lotSize,
     Object? takeProfit = _Undefined,
     Object? stopLoss = _Undefined,
@@ -192,6 +202,7 @@ class _TradeDtoImpl extends TradeDto {
       fee: fee is double? ? fee : this.fee,
       openTime: openTime ?? this.openTime,
       closeTime: closeTime is DateTime? ? closeTime : this.closeTime,
+      holdTime: holdTime is double? ? holdTime : this.holdTime,
       lotSize: lotSize ?? this.lotSize,
       takeProfit: takeProfit is double? ? takeProfit : this.takeProfit,
       stopLoss: stopLoss is double? ? stopLoss : this.stopLoss,
