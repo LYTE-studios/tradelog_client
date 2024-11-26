@@ -282,11 +282,17 @@ class EndpointStatistics extends _i1.EndpointRef {
   @override
   String get name => 'statistics';
 
-  _i2.Future<Map<DateTime, double>> getPnlChart() =>
+  _i2.Future<Map<DateTime, double>> getPnlChart({
+    DateTime? from,
+    DateTime? to,
+  }) =>
       caller.callServerEndpoint<Map<DateTime, double>>(
         'statistics',
         'getPnlChart',
-        {},
+        {
+          'from': from,
+          'to': to,
+        },
       );
 
   _i2.Future<Map<DateTime, double>> getAccountBalanceChart({
