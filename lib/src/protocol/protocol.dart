@@ -326,14 +326,6 @@ class Protocol extends _i1.SerializationManager {
           .map((e) => deserialize<_i32.StopLossThreshold>(e))
           .toList() as dynamic;
     }
-    if (t == List<_i32.TickCost>) {
-      return (data as List).map((e) => deserialize<_i32.TickCost>(e)).toList()
-          as dynamic;
-    }
-    if (t == List<_i32.TickSize>) {
-      return (data as List).map((e) => deserialize<_i32.TickSize>(e)).toList()
-          as dynamic;
-    }
     if (t == _i1.getType<List<String>?>()) {
       return (data != null
           ? (data as List).map((e) => deserialize<String>(e)).toList()
@@ -343,6 +335,17 @@ class Protocol extends _i1.SerializationManager {
       return (data != null
           ? (data as List).map((e) => deserialize<String>(e)).toList()
           : null) as dynamic;
+    }
+    if (t == _i1.getType<Map<String, List<_i32.TradelockerInstrument>>?>()) {
+      return (data != null
+          ? (data as Map).map((k, v) => MapEntry(deserialize<String>(k),
+              deserialize<List<_i32.TradelockerInstrument>>(v)))
+          : null) as dynamic;
+    }
+    if (t == List<_i32.TradelockerInstrument>) {
+      return (data as List)
+          .map((e) => deserialize<_i32.TradelockerInstrument>(e))
+          .toList() as dynamic;
     }
     if (t == List<_i33.LinkedAccountDto>) {
       return (data as List)
