@@ -12,18 +12,21 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
 enum Platform implements _i1.SerializableModel {
-  Metatrader,
-  Tradelocker,
-  TradelockerDemo;
+  mt4,
+  mt5,
+  tradelockerLive,
+  tradelockerDemo;
 
   static Platform fromJson(int index) {
     switch (index) {
       case 0:
-        return Metatrader;
+        return mt4;
       case 1:
-        return Tradelocker;
+        return mt5;
       case 2:
-        return TradelockerDemo;
+        return tradelockerLive;
+      case 3:
+        return tradelockerDemo;
       default:
         throw ArgumentError('Value "$index" cannot be converted to "Platform"');
     }

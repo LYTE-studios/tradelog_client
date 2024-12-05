@@ -10,8 +10,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../protocol.dart' as _i2;
+import '../../core/tables/linked_account.dart' as _i2;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i3;
+import '../../core/models/trade_status.dart' as _i4;
+import '../../core/models/option.dart' as _i5;
 
 abstract class Trade implements _i1.SerializableModel {
   Trade._({
@@ -40,9 +42,9 @@ abstract class Trade implements _i1.SerializableModel {
     required int userId,
     _i3.UserInfo? user,
     double? realizedPl,
-    required _i2.TradeStatus status,
+    required _i4.TradeStatus status,
     required String symbol,
-    required _i2.Option option,
+    required _i5.Option option,
     String? feeCurrency,
     double? fee,
     required DateTime openTime,
@@ -66,9 +68,9 @@ abstract class Trade implements _i1.SerializableModel {
           : _i3.UserInfo.fromJson(
               (jsonSerialization['user'] as Map<String, dynamic>)),
       realizedPl: (jsonSerialization['realizedPl'] as num?)?.toDouble(),
-      status: _i2.TradeStatus.fromJson((jsonSerialization['status'] as int)),
+      status: _i4.TradeStatus.fromJson((jsonSerialization['status'] as int)),
       symbol: jsonSerialization['symbol'] as String,
-      option: _i2.Option.fromJson((jsonSerialization['option'] as int)),
+      option: _i5.Option.fromJson((jsonSerialization['option'] as int)),
       feeCurrency: jsonSerialization['feeCurrency'] as String?,
       fee: (jsonSerialization['fee'] as num?)?.toDouble(),
       openTime:
@@ -97,11 +99,11 @@ abstract class Trade implements _i1.SerializableModel {
 
   double? realizedPl;
 
-  _i2.TradeStatus status;
+  _i4.TradeStatus status;
 
   String symbol;
 
-  _i2.Option option;
+  _i5.Option option;
 
   String? feeCurrency;
 
@@ -124,9 +126,9 @@ abstract class Trade implements _i1.SerializableModel {
     int? userId,
     _i3.UserInfo? user,
     double? realizedPl,
-    _i2.TradeStatus? status,
+    _i4.TradeStatus? status,
     String? symbol,
-    _i2.Option? option,
+    _i5.Option? option,
     String? feeCurrency,
     double? fee,
     DateTime? openTime,
@@ -173,9 +175,9 @@ class _TradeImpl extends Trade {
     required int userId,
     _i3.UserInfo? user,
     double? realizedPl,
-    required _i2.TradeStatus status,
+    required _i4.TradeStatus status,
     required String symbol,
-    required _i2.Option option,
+    required _i5.Option option,
     String? feeCurrency,
     double? fee,
     required DateTime openTime,
@@ -210,9 +212,9 @@ class _TradeImpl extends Trade {
     int? userId,
     Object? user = _Undefined,
     Object? realizedPl = _Undefined,
-    _i2.TradeStatus? status,
+    _i4.TradeStatus? status,
     String? symbol,
-    _i2.Option? option,
+    _i5.Option? option,
     Object? feeCurrency = _Undefined,
     Object? fee = _Undefined,
     DateTime? openTime,

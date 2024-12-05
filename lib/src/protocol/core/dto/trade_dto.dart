@@ -10,7 +10,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../protocol.dart' as _i2;
+import '../../core/models/trade_status.dart' as _i2;
+import '../../core/models/option.dart' as _i3;
 
 abstract class TradeDto implements _i1.SerializableModel {
   TradeDto._({
@@ -35,7 +36,7 @@ abstract class TradeDto implements _i1.SerializableModel {
     required _i2.TradeStatus status,
     double? realizedPl,
     required String symbol,
-    required _i2.Option option,
+    required _i3.Option option,
     String? feeCurrency,
     double? fee,
     required DateTime openTime,
@@ -53,7 +54,7 @@ abstract class TradeDto implements _i1.SerializableModel {
       status: _i2.TradeStatus.fromJson((jsonSerialization['status'] as int)),
       realizedPl: (jsonSerialization['realizedPl'] as num?)?.toDouble(),
       symbol: jsonSerialization['symbol'] as String,
-      option: _i2.Option.fromJson((jsonSerialization['option'] as int)),
+      option: _i3.Option.fromJson((jsonSerialization['option'] as int)),
       feeCurrency: jsonSerialization['feeCurrency'] as String?,
       fee: (jsonSerialization['fee'] as num?)?.toDouble(),
       openTime:
@@ -77,7 +78,7 @@ abstract class TradeDto implements _i1.SerializableModel {
 
   String symbol;
 
-  _i2.Option option;
+  _i3.Option option;
 
   String? feeCurrency;
 
@@ -102,7 +103,7 @@ abstract class TradeDto implements _i1.SerializableModel {
     _i2.TradeStatus? status,
     double? realizedPl,
     String? symbol,
-    _i2.Option? option,
+    _i3.Option? option,
     String? feeCurrency,
     double? fee,
     DateTime? openTime,
@@ -147,7 +148,7 @@ class _TradeDtoImpl extends TradeDto {
     required _i2.TradeStatus status,
     double? realizedPl,
     required String symbol,
-    required _i2.Option option,
+    required _i3.Option option,
     String? feeCurrency,
     double? fee,
     required DateTime openTime,
@@ -180,7 +181,7 @@ class _TradeDtoImpl extends TradeDto {
     _i2.TradeStatus? status,
     Object? realizedPl = _Undefined,
     String? symbol,
-    _i2.Option? option,
+    _i3.Option? option,
     Object? feeCurrency = _Undefined,
     Object? fee = _Undefined,
     DateTime? openTime,
