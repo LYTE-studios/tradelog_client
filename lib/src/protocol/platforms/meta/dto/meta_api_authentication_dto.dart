@@ -18,7 +18,8 @@ abstract class MetaApiAuthenticationDto implements _i1.SerializableModel {
     required this.name,
     required this.server,
     required this.platform,
-  });
+    int? magic,
+  }) : magic = magic ?? 0;
 
   factory MetaApiAuthenticationDto({
     required String login,
@@ -26,6 +27,7 @@ abstract class MetaApiAuthenticationDto implements _i1.SerializableModel {
     required String name,
     required String server,
     required String platform,
+    int? magic,
   }) = _MetaApiAuthenticationDtoImpl;
 
   factory MetaApiAuthenticationDto.fromJson(
@@ -36,6 +38,7 @@ abstract class MetaApiAuthenticationDto implements _i1.SerializableModel {
       name: jsonSerialization['name'] as String,
       server: jsonSerialization['server'] as String,
       platform: jsonSerialization['platform'] as String,
+      magic: jsonSerialization['magic'] as int,
     );
   }
 
@@ -49,12 +52,15 @@ abstract class MetaApiAuthenticationDto implements _i1.SerializableModel {
 
   String platform;
 
+  int magic;
+
   MetaApiAuthenticationDto copyWith({
     String? login,
     String? password,
     String? name,
     String? server,
     String? platform,
+    int? magic,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -64,6 +70,7 @@ abstract class MetaApiAuthenticationDto implements _i1.SerializableModel {
       'name': name,
       'server': server,
       'platform': platform,
+      'magic': magic,
     };
   }
 
@@ -80,12 +87,14 @@ class _MetaApiAuthenticationDtoImpl extends MetaApiAuthenticationDto {
     required String name,
     required String server,
     required String platform,
+    int? magic,
   }) : super._(
           login: login,
           password: password,
           name: name,
           server: server,
           platform: platform,
+          magic: magic,
         );
 
   @override
@@ -95,6 +104,7 @@ class _MetaApiAuthenticationDtoImpl extends MetaApiAuthenticationDto {
     String? name,
     String? server,
     String? platform,
+    int? magic,
   }) {
     return MetaApiAuthenticationDto(
       login: login ?? this.login,
@@ -102,6 +112,7 @@ class _MetaApiAuthenticationDtoImpl extends MetaApiAuthenticationDto {
       name: name ?? this.name,
       server: server ?? this.server,
       platform: platform ?? this.platform,
+      magic: magic ?? this.magic,
     );
   }
 }
